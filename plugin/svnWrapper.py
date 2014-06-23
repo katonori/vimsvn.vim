@@ -32,14 +32,20 @@ import os
 
 SCRIPT_DIR = os.path.abspath(os.path.dirname(__file__))
 
+# keep instance used from vim here
+instance = None
+
 class SvnWrapper:
-    mCurRev = 0
+    mWorkingCopyRev = 0
     mRelPathToRoot = '' # relative path to root of the working copy
+    mLogEndRev = 0
+    mLogStartRev = 0
 
     """
     " get repository information
     """
     def getReposInfo(self):
+        global gRelPathToRoot
         cmd = 'svn info --xml'
         #print "cmd: " + cmd
         (rv, out) = commands.getstatusoutput(cmd)
@@ -49,7 +55,7 @@ class SvnWrapper:
             return 1
         root = fromstring(out)
         entry = root.find('entry')
-        self.mCurRev = entry.get('revision')
+        self.mWorkingCopyRev = entry.get('revision')
         curUrl = root.findtext('.//url') # url of current directory
         reposRoot = root.findtext('.//root')
 
@@ -66,11 +72,16 @@ class SvnWrapper:
             i += 1
 
         #root = root.findtext('root')
-        #print 'rev: ' + self.mCurRev
+        #print 'rev: ' + self.mWorkingCopyRev
         #print 'url: ' + str(curUrl)
         #print 'root: ' + reposRoot
         #print 'relPath: ' + self.mRelPathToRoot
+        gRelPathToRoot = self.mRelPathToRoot
         return 0
+
+    def getGlobal(self):
+        global gRelPathToRoot
+        return gRelPathToRoot
 
     """
     " get summary of changes at a revision
@@ -110,13 +121,18 @@ class SvnWrapper:
         #print diffOut
         return diffOut
 
-    def getChangeList(self, startRev, num):
-        startRev = int(startRev)
+    def getChangeList(self, endRev, num):
+        endRev = int(endRev)
+        if endRev > self.mWorkingCopyRev: # currently log of newer revision of working copy is not allowed
+            endRev = self.mWorkingCopyRev
         num = int(num)
-        endRev = startRev - num
-        if endRev < 0:
-            endRev = 0
-        cmd = 'svn log --xml -r ' + str(startRev) + ':' + str(endRev) + " " + self.mRelPathToRoot
+        startRev = endRev - num + 1
+        if startRev < 0:
+            startRev = 0
+        cmd = 'svn log --xml -r ' + str(endRev) + ':' + str(startRev) + " " + self.mRelPathToRoot
+        self.mLogStartRev = int(startRev)
+        self.mLogEndRev = int(endRev)
+
         print 'LogCmd: ' + cmd
         (rv, out) = commands.getstatusoutput(cmd)
         if rv != 0:
@@ -136,12 +152,23 @@ class SvnWrapper:
             i += 1
         return (0, lines)
 
+    def getNextChangeList(self, num):
+        return self.getChangeList(self.mLogStartRev-1, num)
+
+    def getPrevChangeList(self, num):
+        return self.getChangeList(self.mLogEndRev+int(num), num)
+
+    def getRelPathToRoot(self):
+        return self.mRelPathToRoot
+
+    def getWorkingCopyRev(self):
+        return self.mWorkingCopyRev
+
     """
     " init and export variables
     """
     def init(self):
-        rv = self.getReposInfo()
-        return (rv, self.mRelPathToRoot, self.mCurRev)
+        return self.getReposInfo()
 
 if __name__ == '__main__':
     svn = SvnWrapper()

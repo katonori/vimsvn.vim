@@ -8,9 +8,6 @@ let s:changeListFile = tempname()
 let s:changeSummaryFile = tempname()
 let s:scriptName = expand('<sfile>:p')
 let s:dirName = fnamemodify(s:scriptName, ":h") 
-let s:pathToRoot = ''
-let s:workingCopyRev = ''
-let s:logEndRev = ''
 let s:logNum = 500
 
 "
@@ -83,14 +80,15 @@ def func():
     vim.command(":setlocal noswapfile")
     vim.command(":setlocal filetype=SvnChangeList")
 
-    svn = svnWrapper.SvnWrapper()
+    # instantiate
+    if svnWrapper.instance is None:
+        svnWrapper.instance = svnWrapper.SvnWrapper()
+    svn = svnWrapper.instance
+
     # init and export variables
-    (rv, pathToRoot, workingCopyRev) = svn.init()
+    rv = svn.init()
     if rv != 0:
         return 1
-    vim.command(":let s:pathToRoot = \"%s\""%(pathToRoot))
-    vim.command(":let s:workingCopyRev = \"%s\""%(workingCopyRev))
-    vim.command(":let s:logEndRev = \"%s\""%(workingCopyRev))
     logNum = vim.eval("s:logNum")
 
     vim.command(":let s:rv = UpdateChangeList()")
@@ -116,10 +114,10 @@ sys.path.append(vim.eval("s:dirName"))
 import svnWrapper
 
 def func():
+    svn = svnWrapper.instance
     vim.command(":setlocal noro")
-    logEndRev = vim.eval("s:logEndRev")
+    logEndRev = svn.getWorkingCopyRev()
     logNum = vim.eval("s:logNum")
-    svn = svnWrapper.SvnWrapper()
     (rv, lines) = svn.getChangeList(logEndRev, logNum)
     if rv != 0:
         return 1
@@ -152,14 +150,24 @@ sys.path.append(vim.eval("s:dirName"))
 import svnWrapper
 
 def func():
-    logEndRev = int(vim.eval("s:logEndRev"))
-    logNum = int(vim.eval("s:logNum"))
-    logEndRev -= logNum
-    vim.command(":let s:logEndRev = \"%s\""%(logEndRev))
-    vim.command(":let s:rv = UpdateChangeList()")
-    rv = vim.eval("s:rv")
+    svn = svnWrapper.instance
+    vim.command(":setlocal noro")
+    logNum = vim.eval("s:logNum")
+    (rv, lines) = svn.getNextChangeList(logNum)
     if rv != 0:
         return 1
+
+    del vim.current.buffer[:]
+    i = 0
+    for l in lines:
+        if i == 0:
+            vim.current.buffer[0] = l
+        else:
+            vim.current.buffer.append(l)
+        i+=1
+    vim.command(":silent w")
+    vim.command(":setlocal ro")
+
 # run
 func()
 
@@ -178,17 +186,23 @@ sys.path.append(vim.eval("s:dirName"))
 import svnWrapper
 
 def func():
-    workingCopyRev = int(vim.eval("s:workingCopyRev"))
-    logEndRev = int(vim.eval("s:logEndRev"))
-    logNum = int(vim.eval("s:logNum"))
-    logEndRev += logNum
-    if logEndRev > workingCopyRev:
-        logEndRev = workingCopyRev
-    vim.command(":let s:logEndRev = \"%s\""%(logEndRev))
-    vim.command(":let s:rv = UpdateChangeList()")
-    rv = vim.eval("s:rv")
+    svn = svnWrapper.instance
+    vim.command(":setlocal noro")
+    logNum = vim.eval("s:logNum")
+    (rv, lines) = svn.getPrevChangeList(logNum)
     if rv != 0:
         return 1
+
+    del vim.current.buffer[:]
+    i = 0
+    for l in lines:
+        if i == 0:
+            vim.current.buffer[0] = l
+        else:
+            vim.current.buffer.append(l)
+        i+=1
+    vim.command(":silent w")
+    vim.command(":setlocal ro")
 # run
 func()
 
@@ -223,7 +237,7 @@ def func():
     vim.command(":setlocal noswapfile")
     vim.command(":setlocal filetype=SvnChangeSummary")
 
-    svn = svnWrapper.SvnWrapper()
+    svn = svnWrapper.instance
     lines = svn.getChangeSummary(rev)
 
     del vim.current.buffer[:]
@@ -250,13 +264,13 @@ import re
 sys.path.append(vim.eval("s:dirName"))
 import svnWrapper
 
-pathToRoot = vim.eval("s:pathToRoot")
 tmpFile0 = vim.eval("s:tmpFile0")
 tmpFile1 = vim.eval("s:tmpFile1")
 
 def func():
     rev = 0
     fileName = ""
+    svn = svnWrapper.instance
     # get revision
     line = vim.current.buffer[0]
     m = re.match(r'rev: ([0-9]+)', line)
@@ -268,11 +282,10 @@ def func():
     line = vim.current.buffer[row-1]
     m = re.match(r'^.*\t(.*)$', line)
     if m:
-        fileName = pathToRoot + m.group(1)
+        fileName = m.group(1)
     else:
         return
 
-    svn = svnWrapper.SvnWrapper()
     lines = svn.getFileDiff(rev, fileName, tmpFile0, tmpFile1)
     vim.command(":e! " + tmpFile1)
     vim.command(":setlocal filetype=svndiff")
