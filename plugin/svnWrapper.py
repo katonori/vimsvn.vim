@@ -109,13 +109,16 @@ class SvnWrapper:
             kind = e.get('kind')
             if kind == 'dir':
                 path += '/'
-            changeList.append("%s\t%s"%(item, path))
+            changeList.append("%s\t\t%s"%(item, path))
         return changeList
 
     def getFileDiff(self, rev, path, tmpFile0, tmpFile1):
         rev = int(rev)
-        cmpRevStr = str(rev-1) + ':' + str(rev)
-        cmd = 'svn diff -r ' + cmpRevStr + ' --diff-cmd="python" -x "%s/diffWrapper.py -0 %s -1 %s" '%(SCRIPT_DIR, tmpFile0, tmpFile1) + path
+        if rev < 0:
+            cmpRevStr = ''
+        else:
+            cmpRevStr = '-r ' + str(rev-1) + ':' + str(rev)
+        cmd = 'svn diff ' + cmpRevStr + ' --diff-cmd="python" -x "%s/diffWrapper.py -0 %s -1 %s" '%(SCRIPT_DIR, tmpFile0, tmpFile1) + path
         diffOut = commands.getoutput(cmd)
         print 'DiffCmd: ' + cmd
         #print diffOut
@@ -152,6 +155,30 @@ class SvnWrapper:
             i += 1
         return (0, lines)
 
+    def getStat(self):
+        cmd = 'svn stat --xml ' + self.mRelPathToRoot
+        out = commands.getoutput(cmd)
+        root = fromstring(out)
+        entries = root.findall('.//entry')
+        outList = []
+        for e in entries:
+            path = e.get('path')
+            stat = e.find('wc-status').get('item')
+            outList.append((self.getStatChar(stat), path))
+        return outList
+
+    def getStatChar(self, str):
+        if str == 'unversioned':
+            return '?'
+        elif str == 'modified':
+            return 'M'
+        elif str == 'deleted':
+            return 'D'
+        elif str == 'added':
+            return 'A'
+        else:
+            return 'X'
+
     def getNextChangeList(self, num):
         return self.getChangeList(self.mLogStartRev-1, num)
 
@@ -174,6 +201,7 @@ def getInstance():
     global gInstance
     if gInstance is None:
         gInstance = SvnWrapper()
+    gInstance.init()
     return gInstance
 
 if __name__ == '__main__':
