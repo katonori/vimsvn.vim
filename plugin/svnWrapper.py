@@ -33,7 +33,7 @@ import os
 SCRIPT_DIR = os.path.abspath(os.path.dirname(__file__))
 
 # keep instance used from vim here
-instance = None
+gInstance = None
 
 class SvnWrapper:
     mWorkingCopyRev = 0
@@ -169,6 +169,12 @@ class SvnWrapper:
     """
     def init(self):
         return self.getReposInfo()
+
+def getInstance():
+    global gInstance
+    if gInstance is None:
+        gInstance = SvnWrapper()
+    return gInstance
 
 if __name__ == '__main__':
     svn = SvnWrapper()

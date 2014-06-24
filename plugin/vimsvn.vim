@@ -80,10 +80,7 @@ def func():
     vim.command(":setlocal noswapfile")
     vim.command(":setlocal filetype=SvnChangeList")
 
-    # instantiate
-    if svnWrapper.instance is None:
-        svnWrapper.instance = svnWrapper.SvnWrapper()
-    svn = svnWrapper.instance
+    svn = svnWrapper.getInstance()
 
     # init and export variables
     rv = svn.init()
@@ -114,7 +111,7 @@ sys.path.append(vim.eval("s:dirName"))
 import svnWrapper
 
 def func():
-    svn = svnWrapper.instance
+    svn = svnWrapper.getInstance()
     vim.command(":setlocal noro")
     logEndRev = svn.getWorkingCopyRev()
     logNum = vim.eval("s:logNum")
@@ -150,7 +147,7 @@ sys.path.append(vim.eval("s:dirName"))
 import svnWrapper
 
 def func():
-    svn = svnWrapper.instance
+    svn = svnWrapper.getInstance()
     vim.command(":setlocal noro")
     logNum = vim.eval("s:logNum")
     (rv, lines) = svn.getNextChangeList(logNum)
@@ -186,7 +183,7 @@ sys.path.append(vim.eval("s:dirName"))
 import svnWrapper
 
 def func():
-    svn = svnWrapper.instance
+    svn = svnWrapper.getInstance()
     vim.command(":setlocal noro")
     logNum = vim.eval("s:logNum")
     (rv, lines) = svn.getPrevChangeList(logNum)
@@ -237,7 +234,7 @@ def func():
     vim.command(":setlocal noswapfile")
     vim.command(":setlocal filetype=SvnChangeSummary")
 
-    svn = svnWrapper.instance
+    svn = svnWrapper.getInstance()
     lines = svn.getChangeSummary(rev)
 
     del vim.current.buffer[:]
@@ -270,7 +267,7 @@ tmpFile1 = vim.eval("s:tmpFile1")
 def func():
     rev = 0
     fileName = ""
-    svn = svnWrapper.instance
+    svn = svnWrapper.getInstance()
     # get revision
     line = vim.current.buffer[0]
     m = re.match(r'rev: ([0-9]+)', line)
