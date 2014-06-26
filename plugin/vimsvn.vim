@@ -1,3 +1,28 @@
+"Copyright (c) 2013, katonori All rights reserved.
+"
+"Redistribution and use in source and binary forms, with or without modification, are
+"permitted provided that the following conditions are met:
+"
+"  1. Redistributions of source code must retain the above copyright notice, this list
+"     of conditions and the following disclaimer.
+"  2. Redistributions in binary form must reproduce the above copyright notice, this
+"     list of conditions and the following disclaimer in the documentation and/or other
+"     materials provided with the distribution.
+"  3. Neither the name of the katonori nor the names of its contributors may be used to
+"     endorse or promote products derived from this software without specific prior
+"     written permission.
+"
+"THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY
+"EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+"OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT
+"SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+"INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED
+"TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
+"BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+"CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+"ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
+"DAMAGE.
+
 if !has('python')
     echo "Error: Required vim compiled with +python"
     finish
@@ -11,6 +36,7 @@ let s:scriptName = expand('<sfile>:p')
 let s:dirName = fnamemodify(s:scriptName, ":h") 
 let s:logNum = 500
 let s:prevBufName = ""
+let s:logFile = tempname()
 
 "
 " functions for map settings
@@ -85,13 +111,14 @@ import svnWrapper
 
 def func():
     changeListFile = vim.eval("s:changeListFile")
+    logFile = vim.eval("s:logFile")
 
     # setup buff
     vim.command(":silent e " + changeListFile)
     vim.command(":setlocal noswapfile")
     vim.command(":setlocal filetype=SvnChangeListView")
 
-    svn = svnWrapper.getInstance()
+    svn = svnWrapper.getInstance(logFile)
 
     logNum = vim.eval("s:logNum")
 
@@ -118,7 +145,8 @@ sys.path.append(vim.eval("s:dirName"))
 import svnWrapper
 
 def func():
-    svn = svnWrapper.getInstance()
+    logFile = vim.eval("s:logFile")
+    svn = svnWrapper.getInstance(logFile)
     vim.command(":setlocal noro")
     logEndRev = svn.getWorkingCopyRev()
     logNum = vim.eval("s:logNum")
@@ -154,7 +182,8 @@ sys.path.append(vim.eval("s:dirName"))
 import svnWrapper
 
 def func():
-    svn = svnWrapper.getInstance()
+    logFile = vim.eval("s:logFile")
+    svn = svnWrapper.getInstance(logFile)
     vim.command(":setlocal noro")
     logNum = vim.eval("s:logNum")
     (rv, lines) = svn.getNextChangeList(logNum)
@@ -190,7 +219,8 @@ sys.path.append(vim.eval("s:dirName"))
 import svnWrapper
 
 def func():
-    svn = svnWrapper.getInstance()
+    logFile = vim.eval("s:logFile")
+    svn = svnWrapper.getInstance(logFile)
     vim.command(":setlocal noro")
     logNum = vim.eval("s:logNum")
     (rv, lines) = svn.getPrevChangeList(logNum)
@@ -241,7 +271,8 @@ def func():
     vim.command(":setlocal noswapfile")
     vim.command(":setlocal filetype=SvnChangeSummaryView")
 
-    svn = svnWrapper.getInstance()
+    logFile = vim.eval("s:logFile")
+    svn = svnWrapper.getInstance(logFile)
     lines = svn.getChangeSummary(rev)
 
     del vim.current.buffer[:]
@@ -276,7 +307,8 @@ isLocal = vim.eval("a:isLocal")
 def func():
     rev = 0
     fileName = ''
-    svn = svnWrapper.getInstance()
+    logFile = vim.eval("s:logFile")
+    svn = svnWrapper.getInstance(logFile)
 
     if isLocal != '0':
         rev = -1
@@ -298,11 +330,19 @@ def func():
     else:
         return
 
+    file0 = ''
+    file1 = ''
+    if isLocal == '0':
+        file0 = tmpFile0
+        file1 = tmpFile1
+    else:
+        file0 = tmpFile0
+        file1 = fileName
+
     lines = svn.getFileDiff(rev, fileName, tmpFile0, tmpFile1)
-    vim.command(":e! " + tmpFile1)
+    vim.command(":view! " + file1)
     vim.command(":setlocal filetype=SvnDiffView")
-    vim.command(":setlocal ro")
-    vim.command(":vert diffsplit " + tmpFile0)
+    vim.command(":vert diffsplit " + file0)
     vim.command(":setlocal filetype=SvnDiffView")
     vim.command(":setlocal ro")
 # run
@@ -330,7 +370,8 @@ def func():
     vim.command(":setlocal noswapfile")
     vim.command(":setlocal filetype=SvnStatView")
 
-    svn = svnWrapper.getInstance()
+    logFile = vim.eval("s:logFile")
+    svn = svnWrapper.getInstance(logFile)
     statList =svn.getStat()
     del vim.current.buffer[:]
     vim.current.buffer[0] = "rev: " + str(svn.getWorkingCopyRev())
@@ -347,3 +388,8 @@ func()
 
 EOF
 endfunction
+
+function! SvnOpenLog()
+    execute "split " . s:logFile
+endfunction
+

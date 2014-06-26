@@ -40,6 +40,8 @@ class SvnWrapper:
     mRelPathToRoot = '' # relative path to root of the working copy
     mLogEndRev = 0
     mLogStartRev = 0
+    mLogFile = ''
+    mPipe = ''
 
     """
     " get repository information
@@ -47,8 +49,10 @@ class SvnWrapper:
     def getReposInfo(self):
         global gRelPathToRoot
         cmd = 'svn info --xml'
+        self.appendToLog(cmd)
         #print "cmd: " + cmd
         (rv, out) = commands.getstatusoutput(cmd)
+        self.appendToLog(out)
         if 0 != rv:
             print "ERROR: could not get information from working copy"
             print out
@@ -92,8 +96,9 @@ class SvnWrapper:
 
         # get log in xml format
         cmd = 'svn diff --summarize --xml -r %s '%(cmpRevStr) + self.mRelPathToRoot
-        print cmd
+        self.appendToLog(cmd)
         out = commands.getoutput(cmd)
+        self.appendToLog(out)
         elem = fromstring(out)
         changeList = [] 
 
@@ -119,8 +124,9 @@ class SvnWrapper:
         else:
             cmpRevStr = '-r ' + str(rev-1) + ':' + str(rev)
         cmd = 'svn diff ' + cmpRevStr + ' --diff-cmd="python" -x "%s/diffWrapper.py -0 %s -1 %s" '%(SCRIPT_DIR, tmpFile0, tmpFile1) + path
+        self.appendToLog(cmd)
         diffOut = commands.getoutput(cmd)
-        print 'DiffCmd: ' + cmd
+        self.appendToLog(diffOut)
         #print diffOut
         return diffOut
 
@@ -136,8 +142,9 @@ class SvnWrapper:
         self.mLogStartRev = int(startRev)
         self.mLogEndRev = int(endRev)
 
-        print 'LogCmd: ' + cmd
+        self.appendToLog(cmd)
         (rv, out) = commands.getstatusoutput(cmd)
+        self.appendToLog(out)
         if rv != 0:
             print "ERROR: could not get log"
             print out
@@ -157,7 +164,9 @@ class SvnWrapper:
 
     def getStat(self):
         cmd = 'svn stat --xml ' + self.mRelPathToRoot
+        self.appendToLog(cmd)
         out = commands.getoutput(cmd)
+        self.appendToLog(out)
         root = fromstring(out)
         entries = root.findall('.//entry')
         outList = []
@@ -177,7 +186,7 @@ class SvnWrapper:
         elif str == 'added':
             return 'A'
         else:
-            return 'X'
+            return str
 
     def getNextChangeList(self, num):
         return self.getChangeList(self.mLogStartRev-1, num)
@@ -191,17 +200,23 @@ class SvnWrapper:
     def getWorkingCopyRev(self):
         return self.mWorkingCopyRev
 
+    def appendToLog(self, log):
+        f = open(self.mLogFile, 'a')
+        f.write(log)
+        f.close()
+
     """
     " init and export variables
     """
-    def init(self):
+    def init(self, logfile):
+        self.mLogFile = logfile
         return self.getReposInfo()
 
-def getInstance():
+def getInstance(logfile):
     global gInstance
     if gInstance is None:
         gInstance = SvnWrapper()
-    gInstance.init()
+    gInstance.init(logfile)
     return gInstance
 
 if __name__ == '__main__':
