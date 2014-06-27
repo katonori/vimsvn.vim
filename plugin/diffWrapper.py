@@ -28,6 +28,7 @@ import sys
 import getopt
 import shutil
 import commands
+import os
 
 argvs = sys.argv
 argc = len(argvs)
@@ -55,7 +56,9 @@ if len(args) != 2:
     sys.exit(1)
 
 shutil.copy(args[0], tmpFileList[0])
+os.chmod(tmpFileList[0], 0644)
 shutil.copy(args[1], tmpFileList[1])
+os.chmod(tmpFileList[1], 0644)
 
 if fileList[0]:
     print fileList[0],
