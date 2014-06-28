@@ -128,7 +128,8 @@ class SvnWrapper:
         diffOut = commands.getoutput(cmd)
         self.appendToLog(diffOut)
         #print diffOut
-        return diffOut
+        lines = diffOut.split('\n')
+        return lines[-1]
 
     def getChangeList(self, endRev, num):
         endRev = int(endRev)

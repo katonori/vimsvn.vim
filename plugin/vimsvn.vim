@@ -37,6 +37,7 @@ let s:dirName = fnamemodify(s:scriptName, ":h")
 let s:logNum = 500
 let s:prevBufName = ""
 let s:logFile = tempname()
+let s:statLineOrig = &statusline
 
 "
 " functions for map settings
@@ -340,9 +341,25 @@ def func():
         file1 = fileName
 
     lines = svn.getFileDiff(rev, fileName, tmpFile0, tmpFile1)
+    fileInfos = lines.split('|')
     vim.command(":view! " + file1)
     vim.command(":setlocal filetype=SvnDiffView")
+    # setup status line
+    statline = vim.eval("s:statLineOrig")
+    fileInfos[1] = fileInfos[1].replace('revision', 'r')
+    statline = '[' + re.sub('[ \t]', '', fileInfos[1]) + '] ' + statline
+    statline = statline.replace(' ', '\ ')
+    statline = statline.replace('	', '\	')
+    vim.command(":setlocal statusline=%s"%(statline))
+
     vim.command(":vert diffsplit " + file0)
+    # setup status line
+    statline = vim.eval("s:statLineOrig")
+    fileInfos[0] = fileInfos[0].replace('revision', 'r')
+    statline = '[' + re.sub('[ \t]', '', fileInfos[0]) + '] ' + statline
+    statline = statline.replace(' ', '\ ')
+    statline = statline.replace('	', '\	')
+    vim.command(":setlocal statusline=%s"%(statline))
     vim.command(":setlocal filetype=SvnDiffView")
     vim.command(":setlocal ro")
 # run
