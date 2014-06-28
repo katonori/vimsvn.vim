@@ -37,6 +37,7 @@ let s:dirName = fnamemodify(s:scriptName, ":h")
 let s:logNum = 500
 let s:prevBufName = ""
 let s:logFile = tempname()
+let s:commitMsg = tempname()
 let s:statLineOrig = &statusline
 
 "
@@ -369,6 +370,137 @@ EOF
 endfunction
 
 "
+" add file to repository
+"
+function! SvnAddFile()
+python << EOF
+import vim
+import sys
+import re
+# add script directory to search path
+sys.path.append(vim.eval("s:dirName"))
+import svnWrapper
+
+def func():
+    fileName = ''
+    svn = svnWrapper.getInstance(vim.eval("s:logFile"))
+
+    # get fileName
+    (row, col) = vim.current.window.cursor
+    line = vim.current.buffer[row-1]
+    m = re.match(r'^\?\t\t(.*)$', line)
+    if m:
+        fileName = m.group(1)
+    else:
+        return
+
+    svn.addFile(fileName)
+    vim.command(":call SvnGetStat()")
+
+# run
+func()
+
+EOF
+endfunction
+
+"
+" revert file
+"
+function! SvnRevertFile()
+python << EOF
+import vim
+import sys
+import re
+# add script directory to search path
+sys.path.append(vim.eval("s:dirName"))
+import svnWrapper
+
+def func():
+    fileName = ''
+    svn = svnWrapper.getInstance(vim.eval("s:logFile"))
+
+    # get fileName
+    (row, col) = vim.current.window.cursor
+    line = vim.current.buffer[row-1]
+    m = re.match(r'^[AMD]\t\t(.*)$', line)
+    if m:
+        fileName = m.group(1)
+    else:
+        return
+
+    svn.revertFile(fileName)
+    vim.command(":call SvnGetStat()")
+
+# run
+func()
+
+EOF
+endfunction
+
+"
+" commit file
+"
+function! SvnCommitFile(fileName)
+python << EOF
+import vim
+import sys
+import re
+import os
+# add script directory to search path
+sys.path.append(vim.eval("s:dirName"))
+import svnWrapper
+
+def func():
+    fileName = vim.eval("a:fileName")
+    commitMsgFile = vim.eval("s:commitMsg")
+    svn = svnWrapper.getInstance(vim.eval("s:logFile"))
+    if os.path.getsize(commitMsgFile) != 0:
+        svn.commitFile(fileName, commitMsgFile)
+        vim.command(":call SvnGetStat()")
+
+# run
+func()
+
+EOF
+endfunction
+
+"
+" commit file
+"
+function! SvnEditCommitLog()
+python << EOF
+import vim
+import sys
+import re
+# add script directory to search path
+sys.path.append(vim.eval("s:dirName"))
+import svnWrapper
+
+def func():
+    fileName = ''
+    svn = svnWrapper.getInstance(vim.eval("s:logFile"))
+
+    # get fileName
+    (row, col) = vim.current.window.cursor
+    line = vim.current.buffer[row-1]
+    m = re.match(r'^[AMD]\t\t(.*)$', line)
+    if m:
+        fileName = m.group(1)
+    else:
+        return
+
+    vim.command(":new! " + vim.eval("s:commitMsg"))
+    vim.command("setlocal statusline=[commit\ message\ buffer]\ add\ message\ and\ close\ to\ check\ in.\ close\ buffer\ leaving\ empty\ to\ cancel:\ " + vim.eval("s:commitMsg"))
+    del vim.current.buffer[:]
+    vim.command(":autocmd BufUnload <buffer> call SvnCommitFile(" + "'" + fileName + "')")
+
+# run
+func()
+
+EOF
+endfunction
+
+"
 " get current status of working copy
 "
 function! SvnGetStat()
@@ -396,7 +528,7 @@ def func():
         (stat, path) = s
         line = stat + "\t\t" + path
         vim.current.buffer.append(line)
-    vim.command(":w")
+    vim.command(":w!")
     vim.command(":setlocal ro")
     vim.command(":let s:prevBufName = " + "'" + statFile + "'")
 

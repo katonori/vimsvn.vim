@@ -131,6 +131,27 @@ class SvnWrapper:
         lines = diffOut.split('\n')
         return lines[-1]
 
+    def addFile(self, file):
+        cmd = 'svn add %s'%(file)
+        self.appendToLog(cmd)
+        diffOut = commands.getoutput(cmd)
+        self.appendToLog(diffOut)
+        return 
+
+    def revertFile(self, file):
+        cmd = 'svn revert %s'%(file)
+        self.appendToLog(cmd)
+        diffOut = commands.getoutput(cmd)
+        self.appendToLog(diffOut)
+        return 
+
+    def commitFile(self, file, log):
+        cmd = 'svn ci --file %s %s'%(log, file)
+        self.appendToLog(cmd)
+        diffOut = commands.getoutput(cmd)
+        self.appendToLog(diffOut)
+        return 
+
     def getChangeList(self, endRev, num):
         endRev = int(endRev)
         if endRev > self.mWorkingCopyRev: # currently log of newer revision of working copy is not allowed
