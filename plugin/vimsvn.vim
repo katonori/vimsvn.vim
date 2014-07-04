@@ -160,9 +160,9 @@ def func():
     i = 0
     for l in lines:
         if i == 0:
-            vim.current.buffer[0] = l
+            vim.current.buffer[0] = l.encode('utf-8')
         else:
-            vim.current.buffer.append(l)
+            vim.current.buffer.append(l.encode('utf-8'))
         i+=1
     vim.command(":silent w")
     vim.command(":setlocal ro")
@@ -196,9 +196,9 @@ def func():
     i = 0
     for l in lines:
         if i == 0:
-            vim.current.buffer[0] = l
+            vim.current.buffer[0] = l.encode('utf-8')
         else:
-            vim.current.buffer.append(l)
+            vim.current.buffer.append(l.encode('utf-8'))
         i+=1
     vim.command(":silent w")
     vim.command(":setlocal ro")
@@ -233,9 +233,9 @@ def func():
     i = 0
     for l in lines:
         if i == 0:
-            vim.current.buffer[0] = l
+            vim.current.buffer[0] = l.encode('utf-8')
         else:
-            vim.current.buffer.append(l)
+            vim.current.buffer.append(l.encode('utf-8'))
         i+=1
     vim.command(":silent w")
     vim.command(":setlocal ro")
@@ -280,7 +280,7 @@ def func():
     del vim.current.buffer[:]
     vim.current.buffer[0] = "rev: " + str(rev)
     for l in lines:
-        vim.current.buffer.append(l)
+        vim.current.buffer.append(l.encode('utf-8'))
     vim.command(":w")
     vim.command(":setlocal ro")
     vim.command(":let s:prevBufName = " + "'" + changeSummaryFile + "'")
@@ -527,7 +527,7 @@ def func():
     for s in statList:
         (stat, path) = s
         line = stat + "\t\t" + path
-        vim.current.buffer.append(line)
+        vim.current.buffer.append(line.encode('utf-8'))
     vim.command(":w!")
     vim.command(":setlocal ro")
     vim.command(":let s:prevBufName = " + "'" + statFile + "'")
