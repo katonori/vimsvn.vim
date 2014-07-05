@@ -44,16 +44,26 @@ let s:statLineOrig = &statusline
 " functions for map settings
 "
 function! s:SetupMapChangeListView()
-    :nnoremap <enter> :call <SID>GetChange()<enter>
-    :nnoremap <c-n> :call <SID>GetNextRange()<enter>
-    :nnoremap <c-p> :call <SID>GetPrevRange()<enter>
-    :nnoremap q :q<enter>
+    nnoremap <enter> :call <SID>GetChange()<enter>
+    nnoremap <c-n> :call <SID>GetNextRange()<enter>
+    nnoremap <c-p> :call <SID>GetPrevRange()<enter>
+    nnoremap q :q<enter>
+    syntax match revisionNum '^[0-9]\+'
+    syntax match dateNum ' [0-9\-T:\.]\+Z'
+    highlight link revisionNum Number
+    highlight link dateNum Comment
 endfunction
 
 function! s:SetupMapChangeSummaryView()
     :nnoremap <enter> :call <SID>GetFileDiff(0)<enter>
     let l:cmd = ':nnoremap q :b ' . s:changeListFile. '<enter>'
     execute l:cmd
+    syntax match modeified '^M'
+    syntax match added '^A'
+    syntax match deleted '^D'
+    highlight link modeified Number
+    highlight link added Macro
+    highlight link deleted Comment
 endfunction
 
 function! s:SetupMapStatView()
