@@ -43,32 +43,32 @@ let s:statLineOrig = &statusline
 "
 " functions for map settings
 "
-function! SetupMapChangeListView()
-    :nnoremap <enter> :call GetChange()<enter>
-    :nnoremap <c-n> :call GetNextRange()<enter>
-    :nnoremap <c-p> :call GetPrevRange()<enter>
+function! s:SetupMapChangeListView()
+    :nnoremap <enter> :call <SID>GetChange()<enter>
+    :nnoremap <c-n> :call <SID>GetNextRange()<enter>
+    :nnoremap <c-p> :call <SID>GetPrevRange()<enter>
     :nnoremap q :q<enter>
 endfunction
 
-function! SetupMapChangeSummaryView()
-    :nnoremap <enter> :call GetFileDiff(0)<enter>
+function! s:SetupMapChangeSummaryView()
+    :nnoremap <enter> :call <SID>GetFileDiff(0)<enter>
     let l:cmd = ':nnoremap q :b ' . s:changeListFile. '<enter>'
     execute l:cmd
 endfunction
 
-function! SetupMapStatView()
-    :nnoremap <enter> :call GetFileDiff(1)<enter>
+function! s:SetupMapStatView()
+    :nnoremap <enter> :call <SID>GetFileDiff(1)<enter>
     let l:cmd = ':nnoremap q :q<enter>'
     execute l:cmd
 endfunction
 
-function! SetupMapDiffView()
+function! s:SetupMapDiffView()
     let l:cmd = 'nnoremap q :on<enter>:b ' . s:prevBufName . '<enter>'
     ":echo l:cmd
     execute l:cmd
 endfunction
 
-function! UnmapAll()
+function! s:UnmapAll()
     silent! :nunmap <enter>
     silent! :nunmap q
     silent! :nunmap <c-n>
@@ -78,27 +78,27 @@ endfunction
 "
 " map switcher
 "
-function! SetupMap()
-    :call UnmapAll()
+function! s:SetupMap()
+    :call <SID>UnmapAll()
     if &filetype == "SvnChangeListView"
-        call SetupMapChangeListView()
+        call <SID>SetupMapChangeListView()
     elseif &filetype == "SvnChangeSummaryView"
-        call SetupMapChangeSummaryView()
+        call <SID>SetupMapChangeSummaryView()
     elseif &filetype == "SvnStatView"
-        call SetupMapStatView()
+        call <SID>SetupMapStatView()
     elseif &filetype == "SvnDiffView"
-        call SetupMapDiffView()
+        call <SID>SetupMapDiffView()
     endif
 endfunction
 
 "
 " autocmd settings
 "
-autocmd BufEnter * call SetupMap()
-autocmd FileType SvnChangeListView call SetupMapChangeListView()
-autocmd FileType SvnChangeSummaryView call SetupMapChangeSummaryView()
-autocmd FileType SvnStatView call SetupMapStatView()
-autocmd FileType SvnDiffView call SetupMapDiffView()
+autocmd BufEnter * call <SID>SetupMap()
+autocmd FileType SvnChangeListView call <SID>SetupMapChangeListView()
+autocmd FileType SvnChangeSummaryView call <SID>SetupMapChangeSummaryView()
+autocmd FileType SvnStatView call <SID>SetupMapStatView()
+autocmd FileType SvnDiffView call <SID>SetupMapDiffView()
 
 "
 " entrance function
@@ -124,7 +124,7 @@ def func():
 
     logNum = vim.eval("s:logNum")
 
-    vim.command(":let s:rv = UpdateChangeList()")
+    vim.command(":let s:rv = s:UpdateChangeList()")
     rv = vim.eval("s:rv")
     if rv != 0:
         return 1
@@ -138,7 +138,7 @@ endfunction
 " update change list.
 " range of revision is specified by vim variable.
 "
-function! UpdateChangeList()
+function! s:UpdateChangeList()
 python << EOF
 import vim
 import sys
@@ -175,7 +175,7 @@ endfunction
 "
 " get next range of change list
 "
-function! GetNextRange()
+function! s:GetNextRange()
 python << EOF
 import vim
 import sys
@@ -212,7 +212,7 @@ endfunction
 "
 " get previous range of change list
 "
-function! GetPrevRange()
+function! s:GetPrevRange()
 python << EOF
 import vim
 import sys
@@ -248,7 +248,7 @@ endfunction
 "
 " get change summary of the revision below the cursor
 "
-function! GetChange()
+function! s:GetChange()
 python << EOF
 import vim
 import sys
@@ -293,7 +293,7 @@ endfunction
 "
 " get difference between specified revision and its previous revision.
 "
-function! GetFileDiff(isLocal)
+function! s:GetFileDiff(isLocal)
 python << EOF
 import vim
 import sys
