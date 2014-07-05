@@ -180,7 +180,7 @@ class SvnWrapper:
             date = e.findtext('date')
             msg = e.findtext('msg')
             author = e.findtext('author')
-            lines.append('%s: %s: %s: %s'%(rev, date, author, msg.replace('\n', ' ')))
+            lines.append('%s| %s| %s| %s'%(rev, date, author, msg.replace('\n', ' ')))
             i += 1
         return (0, lines)
 

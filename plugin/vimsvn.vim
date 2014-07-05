@@ -264,7 +264,7 @@ def func():
     rev = 0
     (row, col) = vim.current.window.cursor
     line = vim.current.buffer[row-1]
-    m = re.match(r'^([0-9]+):', line)
+    m = re.match(r'^([0-9]+)|', line)
     if m:
         rev = m.group(1)
 
