@@ -61,9 +61,9 @@ function! s:SetupMapChangeSummaryView()
     syntax match modeified '^M'
     syntax match added '^A'
     syntax match deleted '^D'
-    highlight link modeified Number
-    highlight link added Macro
-    highlight link deleted Comment
+    highlight link modeified Macro
+    highlight link added Comment
+    highlight link deleted Number
 endfunction
 
 function! s:SetupMapStatView()
