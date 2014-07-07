@@ -41,12 +41,21 @@ let s:commitMsg = tempname()
 let s:statLineOrig = &statusline
 
 "
+" define commands
+"
+command! -nargs=0 SvnGetLog :call <SID>SvnGetLog()
+command! -nargs=0 SvnGetStat :call <SID>SvnGetStat()
+command! -nargs=0 SvnOpenLog :call <SID>SvnOpenLog()
+command! -nargs=0 SvnGetLogNextRange :call <SID>SvnGetLogNextRange()
+command! -nargs=0 SvnGetLogPrevRange :call <SID>SvnGetLogPrevRange()
+
+"
 " functions for map settings
 "
 function! s:SetupMapChangeListView()
     nnoremap <enter> :call <SID>GetChange()<enter>
-    nnoremap <c-n> :call <SID>GetNextRange()<enter>
-    nnoremap <c-p> :call <SID>GetPrevRange()<enter>
+    nnoremap <c-n> :call <SID>SvnGetLogNextRange()<enter>
+    nnoremap <c-p> :call <SID>SvnGetLogPrevRange()<enter>
     nnoremap q :q<enter>
     syntax match revisionNum '^[0-9]\+'
     syntax match dateNum ' [0-9\-T:\.]\+Z'
@@ -70,6 +79,12 @@ function! s:SetupMapStatView()
     :nnoremap <enter> :call <SID>GetFileDiff(1)<enter>
     let l:cmd = ':nnoremap q :q<enter>'
     execute l:cmd
+    syntax match modeified '^M'
+    syntax match added '^A'
+    syntax match deleted '^D'
+    highlight link modeified Macro
+    highlight link added Comment
+    highlight link deleted Number
 endfunction
 
 function! s:SetupMapDiffView()
@@ -113,7 +128,7 @@ autocmd FileType SvnDiffView call <SID>SetupMapDiffView()
 "
 " entrance function
 "
-function! SvnGetLog()
+function! s:SvnGetLog()
 python << EOF
 import vim
 import sys
@@ -185,7 +200,7 @@ endfunction
 "
 " get next range of change list
 "
-function! s:GetNextRange()
+function! s:SvnGetLogNextRange()
 python << EOF
 import vim
 import sys
@@ -222,7 +237,7 @@ endfunction
 "
 " get previous range of change list
 "
-function! s:GetPrevRange()
+function! s:SvnGetLogPrevRange()
 python << EOF
 import vim
 import sys
@@ -513,7 +528,7 @@ endfunction
 "
 " get current status of working copy
 "
-function! SvnGetStat()
+function! s:SvnGetStat()
 python << EOF
 import vim
 import sys
@@ -548,7 +563,7 @@ func()
 EOF
 endfunction
 
-function! SvnOpenLog()
+function! s:SvnOpenLog()
     execute "split " . s:logFile
 endfunction
 
