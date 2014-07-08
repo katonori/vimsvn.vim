@@ -10,7 +10,7 @@ mv repos/res*.txt .
 rm -fv res.txt
 for file in res*-*.txt
 do
-    diff ${file} ref/${file} | tee -a res.txt
+    diff ${file} ref/${file} 2>&1 | tee -a res.txt
 done
 LINE=`cat res.txt`
 if [ "" = "${LINE}" ]; then
