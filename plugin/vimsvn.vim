@@ -34,7 +34,7 @@ let s:changeSummaryFile = tempname()
 let s:statFile = tempname()
 let s:scriptName = expand('<sfile>:p')
 let s:dirName = fnamemodify(s:scriptName, ":h") 
-let s:logNum = 500
+let s:logNum = 200
 let s:prevBufName = ""
 let s:logFile = tempname()
 let s:commitMsg = tempname()
@@ -88,7 +88,7 @@ function! s:SetupMapStatView()
 endfunction
 
 function! s:SetupMapDiffView()
-    let l:cmd = 'nnoremap q :on<enter>:b ' . s:prevBufName . '<enter>'
+    let l:cmd = 'nnoremap q <c-w>c<c-w>p:b ' . s:prevBufName . '<enter>'
     ":echo l:cmd
     execute l:cmd
 endfunction
