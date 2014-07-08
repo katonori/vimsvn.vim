@@ -39,6 +39,7 @@ let s:prevBufName = ""
 let s:logFile = tempname()
 let s:commitMsg = tempname()
 let s:statLineOrig = &statusline
+let s:isDiffLocal = 0
 
 "
 " define commands
@@ -48,12 +49,14 @@ command! -nargs=0 SvnGetStat :call <SID>SvnGetStat()
 command! -nargs=0 SvnOpenLog :call <SID>SvnOpenLog()
 command! -nargs=0 SvnGetLogNextRange :call <SID>SvnGetLogNextRange()
 command! -nargs=0 SvnGetLogPrevRange :call <SID>SvnGetLogPrevRange()
+command! -nargs=0 SvnGetFileDiff :call <SID>SvnGetFileDiff()
+command! -nargs=0 SvnGetChange :call <SID>SvnGetChange()
 
 "
 " functions for map settings
 "
 function! s:SetupMapChangeListView()
-    nnoremap <enter> :call <SID>GetChange()<enter>
+    nnoremap <enter> :call <SID>SvnGetChange()<enter>
     nnoremap <c-n> :call <SID>SvnGetLogNextRange()<enter>
     nnoremap <c-p> :call <SID>SvnGetLogPrevRange()<enter>
     nnoremap q :q<enter>
@@ -64,7 +67,7 @@ function! s:SetupMapChangeListView()
 endfunction
 
 function! s:SetupMapChangeSummaryView()
-    :nnoremap <enter> :call <SID>GetFileDiff(0)<enter>
+    :nnoremap <enter> :call <SID>SvnGetFileDiff()<enter>
     let l:cmd = ':nnoremap q :b ' . s:changeListFile. '<enter>'
     execute l:cmd
     syntax match modeified '^M'
@@ -76,7 +79,7 @@ function! s:SetupMapChangeSummaryView()
 endfunction
 
 function! s:SetupMapStatView()
-    :nnoremap <enter> :call <SID>GetFileDiff(1)<enter>
+    :nnoremap <enter> :call <SID>SvnGetFileDiff()<enter>
     let l:cmd = ':nnoremap q :q<enter>'
     execute l:cmd
     syntax match modeified '^M'
@@ -273,7 +276,8 @@ endfunction
 "
 " get change summary of the revision below the cursor
 "
-function! s:GetChange()
+function! s:SvnGetChange()
+    let s:isDiffLocal = 0
 python << EOF
 import vim
 import sys
@@ -318,7 +322,7 @@ endfunction
 "
 " get difference between specified revision and its previous revision.
 "
-function! s:GetFileDiff(isLocal)
+function! s:SvnGetFileDiff()
 python << EOF
 import vim
 import sys
@@ -329,7 +333,7 @@ import svnWrapper
 
 tmpFile0 = vim.eval("s:tmpFile0")
 tmpFile1 = vim.eval("s:tmpFile1")
-isLocal = vim.eval("a:isLocal")
+isLocal = vim.eval("s:isDiffLocal")
 
 def func():
     rev = 0
@@ -529,6 +533,7 @@ endfunction
 " get current status of working copy
 "
 function! s:SvnGetStat()
+    let s:isDiffLocal = 1
 python << EOF
 import vim
 import sys
