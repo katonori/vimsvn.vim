@@ -1,0 +1,183 @@
+46485| 2014-06-21T03:54:19.291686Z| nobu| fiddle/extconf.rb: supply 0  * ext/fiddle/extconf.rb: supply 0 to fill RUBY_LIBFFI_MODVERSION   with 3-digit.  libffi 3.1 returns just 2-digit.   [ruby-core:62920] [Bug #9897]
+46484| 2014-06-20T22:48:41.274923Z| nobu| ChangeLog: fix vm_core.h entry in r46465
+46483| 2014-06-20T22:10:04.579018Z| svn| * remove trailing spaces.
+46482| 2014-06-20T22:10:00.226588Z| svn| * 2014-06-21
+46481| 2014-06-20T22:09:55.119101Z| nobu| encoding.c: fix rdoc [ci skip]  * encoding.c (enc_find): [DOC] never accepted a symbol.   [ruby-dev:48308] [Bug #9966]
+46480| 2014-06-20T08:22:17.250555Z| svn| * properties.
+46479| 2014-06-20T08:22:09.606616Z| ko1| * test/lib/tracepointchecker.rb: add to check TracePoint healthiness. * test/runner.rb: use it.  
+46478| 2014-06-20T06:59:28.891962Z| nobu| insns.def: avoid type-punned pointer cast  * insns.def (once), vm_insnhelper.c (vm_once_exec): turn the   parameter into a VALUE to get rid of type-punned pointer cast.
+46477| 2014-06-20T06:47:37.203709Z| nobu| test_regexp.rb: split test_once  * test/ruby/test_regexp.rb (test_once): split for each cases than   separating by comments.
+46476| 2014-06-20T06:47:10.966392Z| nobu| test_regexp.rb: assert prefix  * test/ruby/test_regexp.rb: rename and prefix `assert_` to show   caller method names in backtrace.
+46475| 2014-06-20T04:20:26.891839Z| nobu| gmake.mk: for love  * defs/gmake.mk: add dependencies for love.
+46474| 2014-06-20T03:12:44.311673Z| akr| Don't erase for verbose mode. 
+46473| 2014-06-20T02:47:14.340010Z| nobu| test_optimization.rb: redefine separately  * test/ruby/test_optimization.rb (assert_redefine_method):   redefine optimized methods in separate processes.
+46472| 2014-06-19T22:27:53.005860Z| ko1| * test/ruby/test_settracefunc.rb: rewrite tests with   assert_consistent_call_return().   assert_consistent_call_return() is also modified to check   consistency.  
+46471| 2014-06-19T22:09:23.540463Z| ko1| * compile.c (rb_iseq_compile_node): put start label of block after   trace (b_call).   [Bug #9964] * test/ruby/test_settracefunc.rb: add a test.   added assert_consistent_call_return() method check call/return   consistency.  
+46470| 2014-06-19T20:28:03.116694Z| svn| * 2014-06-20
+46469| 2014-06-19T20:27:59.788120Z| ko1| * vm_eval.c (rb_catch_protect): fix same problem of [Bug #9961]. * vm_eval.c (rb_iterate): ditto.  
+46466| 2014-06-19T14:11:52.314067Z| nobu| common.mk: fix dependencies  * common.mk, defs/gmake.mk: fix install and uninstall dependencies   with parallel make.
+46465| 2014-06-19T12:43:48.611127Z| ko1| * vm.c (rb_vm_rewind_cfp): add new function to rewind specified cfp   with invoking RUBY_EVENT_C_RETURN.   [Bug #9961] * vm_core.h: ditto. * eval.c (rb_protect): use it. * eval.c (rb_rescue2): ditto. * vm_eval.c (rb_iterate): ditto. * test/ruby/test_settracefunc.rb: add a test. * vm_core.h (rb_name_err_mesg_new):  
+46464| 2014-06-19T10:49:46.270355Z| ko1| * vm.c (invoke_block_from_c): move call/return event timing for   bmethod. It can invoke inconsistent call event if this call raises   argument error.   [Bug #9959] * vm_insnhelper.c (vm_call_bmethod_body): ditto. * test/ruby/test_settracefunc.rb: add a test.  
+46463| 2014-06-19T09:17:21.540085Z| ko1| * vm_core.h: add VM_FRAME_MAGIC_RESCUE to recognize normal block or   rescue clause. * vm.c (vm_exec): use VM_FRAME_MAGIC_RESCUE on at rescue/ensure. * test/ruby/test_settracefunc.rb: should not invoke b_return at rescue   clause.   [Bug #9957] * vm_dump.c (control_frame_dump): check VM_FRAME_MAGIC_RESCUE. * vm_dump.c (vm_stack_dump_each): ditto.  
+46462| 2014-06-19T04:42:26.409053Z| svn| * 2014-06-19
+46461| 2014-06-19T04:42:16.271412Z| nobu| proc.c: Implement Method#curry  * proc.c (rb_method_curry): Implement Method#curry, which delegates   to to_proc.curry.  [ruby-core:62212] [Feature #9783]
+46460| 2014-06-18T06:16:53.546065Z| svn| * 2014-06-18
+46459| 2014-06-18T06:16:39.902393Z| nobu| constify parameters  * include/ruby/intern.h: constify `argv` parameters.  * include/ruby/ruby.h: ditto.
+46458| 2014-06-17T07:45:08.395258Z| svn| * properties.
+46457| 2014-06-17T07:44:53.750407Z| shugo| * lib/net/ftp.rb (gets, readline): read lines without LF properly.   [ruby-core:63205] [Bug #9949]  * test/net/ftp/test_buffered_socket.rb: related test.
+46456| 2014-06-17T03:37:47.203726Z| nobu| eval.c: pass unknown options  * eval.c (extract_raise_opts): pass unknown options to the   exception, so that exception class can receive a hash argument.   [ruby-core:63203] [Feature #8257]
+46455| 2014-06-17T03:27:26.649743Z| ko1| * gc.c (obj_memsize_of): memsize_of(T_ZOMBIE) returns 0, not a rb_bug.   ObjectSpace.count_objects_size() uses memsize_of(T_ZOMBIE).   This bug introduced at r46348.  
+46454| 2014-06-16T20:23:23.636997Z| nobu| configure.in: extract date at build time  * Makefile.in, configure.in (Makefile): extract RUBY_RELEASE_DATE from   version.h at each build time.
+46453| 2014-06-16T19:51:58.471229Z| svn| * 2014-06-17
+46452| 2014-06-16T19:51:38.289868Z| nobu| runner.rb: instance variable  * test/runner.rb (before_setup, after_teardown): use an instance   variable instead of a class variable.
+46448| 2014-06-16T10:01:44.283634Z| ko1| * test/runner.rb: failure message should be passed as an argument.  
+46447| 2014-06-16T09:45:03.897526Z| ko1| * test/runner.rb: capture TracePoint stat before setup and compare   it after teardown.  
+46446| 2014-06-16T09:23:02.647630Z| hsbt| * test/uri/test_generic.rb: fix wrong arguments for test case.
+46445| 2014-06-16T09:17:55.840308Z| hsbt| * test/date/test_date_arith.rb: remove unused block argument.
+46444| 2014-06-16T09:17:54.123918Z| hsbt| * test/date/test_date_strptime.rb: remove useless variable.
+46443| 2014-06-16T08:06:39.414141Z| nobu| string.c: no copy of interned strings  * string.c (sym_succ, sym_cmp, sym_casecmp, sym_match, sym_aref):   not need to make copy of interned strings, use directly.
+46442| 2014-06-16T08:03:42.498588Z| nobu| vm_method.c: no RTEST on mere flag  * vm_method.c (basic_obj_respond_to): `priv` is not a VALUE but a   mere flag, so cannot call RTEST() on it.
+46441| 2014-06-16T05:35:59.102664Z| nobu| process.c: use UTF-8  * process.c (open): use UTF-8 version function to support   non-ascii path properly.  [ruby-core:63185] [Bug #9946]
+46440| 2014-06-16T05:28:16.638768Z| svn| * 2014-06-16
+46439| 2014-06-16T05:28:03.440934Z| nobu| process.c: variable as macro argument  * process.c (run_exec_open): use a local variable to get rid of   RARRAY_AREF() is evaluated multiple times by RSTRING_PTR().
+46438| 2014-06-15T13:21:21.148618Z| nobu| vm_method.c: separate ID selection  * vm_method.c (rb_method_entry_make): separate selection of IDs to   be private from condition of method to be defined.
+46437| 2014-06-15T11:49:25.361588Z| nobu| test_file_exhaustive.rb: fix expected value  * test/ruby/test_file_exhaustive.rb (test_expand_path_memsize):   correct expected value, count terminator byte.  [Bug #9934]
+46436| 2014-06-15T01:09:19.418656Z| nobu| test_file_exhaustive.rb: fix assertion  * test/ruby/test_file_exhaustive.rb (test_expand_path_memsize):   wrong expected value, considering a prefix (drive letter or UNC)   on DOSISH platforms.  [Bug #9934]
+46435| 2014-06-15T01:09:17.694043Z| nobu| process.c: use RB_TYPE_P  * process.c (check_exec_redirect): use RB_TYPE_P instead of single   comparison of TYPE().
+46434| 2014-06-14T23:13:50.018027Z| nobu| runner.rb: use class variable  * test/runner.rb (after_teardown): turn zombie traces hash into a   class variable.
+46433| 2014-06-14T22:11:22.662303Z| nobu| runner.rb: check increment  * test/runner.rb (after_teardown): check increment of active trace   events.
+46432| 2014-06-14T21:54:18.517195Z| svn| * 2014-06-15
+46431| 2014-06-14T21:54:11.039850Z| nobu| runner.rb: include event name  * test/runner.rb (after_teardown): include active trace event name   in the failure message.
+46430| 2014-06-14T13:52:04.409129Z| akr| Restore date field. 
+46429| 2014-06-14T03:47:05.276560Z| akr| Fix a typo. 
+46428| 2014-06-14T01:55:25.201323Z| nobu| array.c: non-recursive rcombinate0  * array.c (rcombinate0): remove recursion, by looping with indexes   stored in `p`.
+46427| 2014-06-14T01:55:07.278972Z| nobu| array.c: non-recursive rpermute0  * array.c (rpermute0): remove recursion, by looping with indexes   stored in `p`.
+46426| 2014-06-14T01:54:45.820779Z| nobu| array.c: non-recursive permute0  * array.c (permute0): remove recursion, by looping with indexes   stored in `p`.  [ruby-core:63103] [Bug #9932]
+46425| 2014-06-14T01:54:33.353638Z| nobu| array.c: combinate0  * array.c (combinate0): extract.
+46424| 2014-06-14T01:53:32.579408Z| nobu| string.c: fix wrong capa  * string.c (rb_str_resize): update capa only when buffer get   reallocated.   http://d.hatena.ne.jp/nagachika/20140613/ruby_trunk_changes_46413_46420#r46413
+46423| 2014-06-13T23:42:35.238611Z| zzak| [DOC] Please see _the_ official issue tracker... [ci skip] 
+46422| 2014-06-13T23:30:25.656570Z| svn| * 2014-06-14
+46421| 2014-06-13T23:30:20.679332Z| zzak| * man/rake.1: [DOC] Update links for Rake, patch by @hsbt [Bug #9904]   [Fixes GH-628] https://github.com/ruby/ruby/pull/628 [ci skip] 
+46420| 2014-06-13T09:01:21.680741Z| ko1| * vm_trace.c: add new method TracePoint.stat to debug   TracePoint mechanism.   Ruby users should not use this method. So I don't note this method   in the NEWS file. * test/runner.rb: detect zombie active TracePoints with   TracePoint.stat.  
+46419| 2014-06-13T08:50:11.698803Z| ko1| * vm_trace.c: clear and restore recursive checking thread local data   to avoid unexpected throw from TracePoint.   [Bug #9940] * test/ruby/test_settracefunc.rb: add a test. * thread.c: adde   * rb_threadptr_reset_recursive_data(rb_thread_t *th);   * rb_threadptr_restore_recursive_data(rb_thread_t *th, VALUE old); * vm_core.h: ditto.  
+46418| 2014-06-13T08:34:17.339668Z| nobu| array.c: combination on a shared copy  * array.c (rb_ary_combination): iterate on a shared copy, and use   array of indexes instead of array of chosen objects.   [ruby-core:63149] [Bug #9939]
+46417| 2014-06-13T08:33:58.373355Z| nobu| array.c: yield_indexed_values  * array.c (yield_indexed_values): extract from permute0(),   rpermute0(), and rcombinate0().
+46416| 2014-06-13T04:43:57.266895Z| nobu| array.c: fix array size  * array.c (rb_ary_permutation): `p` is the array of size `r`, as   commented at permute0().  since `n >= r` here, buffer overflow   never happened, just reduce unnecessary allocation though.
+46415| 2014-06-13T00:00:17.083036Z| svn| * 2014-06-13
+46414| 2014-06-13T00:00:03.795755Z| tmm1| add more test coverage for [ruby-core:63136] [Bug #9934]
+46413| 2014-06-12T11:33:12.013906Z| nobu| string.c: consider capacity  * string.c (rb_str_resize): should consider the capacity instead   of the old length, as pointed out by nagachika.
+46412| 2014-06-12T09:32:36.949482Z| hsbt| * lib/net/http/responses.rb: added Net::HTTPPermanentRedirect(308)   Contributed by @yorkie [fix GH-638]
+46411| 2014-06-12T04:28:16.542827Z| nobu| string.c: shrink before freezing  * string.c (rb_str_freeze): shrink the buffer before freezing, as   pointed out by Eric Wong at [ruby-core:63119].
+46410| 2014-06-12T04:09:41.409867Z| nobu| file.c: shrink expanded path  * file.c (expand_path): shrink expanded path which no longer needs   rooms to append.  [ruby-core:63114] [Bug #9934]
+46409| 2014-06-12T04:09:36.925186Z| svn| * 2014-06-12
+46408| 2014-06-12T04:09:26.223585Z| nobu| string.c: shrink too big buffer  * string.c (rb_str_resize): shrink the buffer even if new length   is same but it is enough smaller than the capacity.
+46406| 2014-06-11T08:38:09.157936Z| nobu| thread.c: fix for non-scalar pthread_t  * configure.in (rb_cv_scalar_pthread_t): pthread_t is not required   to be a scalar type. * thread.c (fill_thread_id_string, thread_id_str): dump pthread_t   in hexadecimal form if it is not a scalar type, assume it can be   represented in a pointer form otherwise.  based on the patch by   Rei Odaira at [ruby-core:62867].  [ruby-core:62857] [Bug #9884] * thread_pthread.c (Init_native_thread, thread_start_func_1),   (native_thread_create): set thread_id_str if needed. * vm_core.h (rb_thread_t): add thread_id_string if needed.
+46405| 2014-06-11T08:37:44.586550Z| nobu| thread_pthread.c: timer thread flag  * thread_pthread.c (timer_thread): add a flag to tell timer thread   is created, since 0 may be a valid value as pthread_t.
+46404| 2014-06-11T08:37:29.431364Z| nobu| thread.c: fix thread ID format  * thread.c (DEBUG_OUT): fix format specifier for a thread ID,   which is DWORD not pointer.
+46400| 2014-06-10T16:55:39.223427Z| svn| * 2014-06-11
+46399| 2014-06-10T16:55:32.753976Z| ko1| * gc.c: invoke GC before memory allocation (xmalloc/xrealloc)   when GC.stress = true.   [Bug #9859] * test/ruby/test_gc.rb: add a test.  
+46397| 2014-06-10T14:44:26.706331Z| nobu| envutil.rb: avoid error on OS X 10.10  * test/ruby/envutil.rb (diagnostic_reports): Mac OS X 10.10 may   not create plist file with crash file together.
+46396| 2014-06-10T14:11:57.901005Z| nobu| bootstraptest/runner.rb: refine output  * bootstraptest/runner.rb (exec_test, show_progress): erase with   white spaces, and adjust each results at same column.
+46395| 2014-06-10T12:12:32.806917Z| kazu| fix a typo [ci skip]
+46394| 2014-06-10T08:30:10.230767Z| nobu| win32/setup.mak: rename RUBY_RELEASE_DATE  * win32/setup.mak (verconf.mk): rename RUBY_PROGRAM_VERSION as   RUBY_RELEASE_DATE, same as other platforms.
+46393| 2014-06-10T08:30:01.750895Z| nobu| win32/setup.mak: separate verconf.mk  * win32/setup.mak (verconf.mk): separate RUBY_RELEASE_DATE from   Makefile so that build would not stop everyday.
+46392| 2014-06-10T04:29:49.763796Z| xibbar| * lib/cgi/core.rb: Provide a mechanism to specify the   max_multipart_length of multipart data.   [Feature #8370] patch by Leif Eriksen <leif.eriksen.au@gmail.com>
+46391| 2014-06-10T01:57:10.537429Z| nobu| csv.rb: honor encoding option  * lib/csv.rb (CSV#<<): honor explicity given encoding.  based on   the patch by DAISUKE TANIWAKI <daisuketaniwaki AT gmail.com> at   [ruby-core:62113].  [Bug #9766]
+46390| 2014-06-10T01:45:03.474626Z| svn| * 2014-06-10
+46389| 2014-06-10T01:44:57.847864Z| nobu| envutil.rb: use keyword argument  * test/ruby/envutil.rb (assert_valid_syntax): use keyword argument.
+46388| 2014-06-09T14:05:47.926595Z| nobu| fold too long line
+46387| 2014-06-09T11:43:23.038575Z| ko1| * gc.c: change full GC timing to keep lower memory usage.   Extend heap only at   (1) after major GC   or   (2) after several (two times, at current) minor GC   Details in https://bugs.ruby-lang.org/issues/9607#note-9   [Bug #9607]  
+46386| 2014-06-09T07:01:44.380861Z| nobu| gc.c: fix typo  * gc.c (gcdebug_sentinel): fix typo, "sentinel" not "sential".   [fix GH-634]
+46385| 2014-06-08T15:04:37.384670Z| svn| * 2014-06-09
+46384| 2014-06-08T15:04:29.063262Z| nobu| configure.in: disable posix_fadvise  * configure.in (posix_fadvise): disable use of posix_fadvise   itself on 32-bit AIX.  [ruby-core:62968] [Bug #9914]
+46383| 2014-06-08T14:46:43.175998Z| nobu| compile.c: use enum  * compile.c (new_insn_body): use enum instead of bare int.
+46382| 2014-06-08T14:39:27.667603Z| kanemoto| io.c (rb_io_advise): AIX currently does not support a 32-bit call to posix_fadvise() if _LARGE_FILES is defined. Patch by Rei Odaira. [ruby-core:62968] [Bug #9914] 
+46381| 2014-06-08T01:22:11.039837Z| akr| Show the epapsed time for failed test as well. 
+46380| 2014-06-08T01:02:49.443349Z| nobu| test_thread.rb: remove garbage  * bootstraptest/test_thread.rb: remove a garbage line for debug.
+46379| 2014-06-07T19:57:46.303676Z| nobu| bootstraptest/test_{fork,io,thread}.rb: reduce sleep times
+46378| 2014-06-07T19:57:43.035300Z| nobu| runner.rb: elapsed times  * bootstraptest/runner.rb (show_progress): show each elapsed times   in verbose mode.
+46377| 2014-06-07T19:52:51.476399Z| svn| * 2014-06-08
+46376| 2014-06-07T19:52:43.530200Z| nobu| string.c: update rdoc of rb_str_slice_bang()  * string.c (rb_str_slice_bang): [DOC] update return value against   a fixnum, which has changed because of M17N.  [fix GH-631]
+46375| 2014-06-07T13:16:01.753337Z| eregon| * numeric.c (do_coerce): Add a warning when an exception is raised   or an invalid value is returned in #coerce called by   numeric comparison operators and the exception   thrown by the caller has no information on the failure.   In the next release such exception should not be rescued or   should be the cause of the caller exception. nil is accepted   as the "no possible coercion" return value. See #7688. * test/ruby/test_numeric.rb: Add corresponding test.
+46374| 2014-06-07T09:16:21.576765Z| eregon| * numeric.c (bit_coerce): remove constant parameter `err'   (always TRUE) of bit_coerce().
+46373| 2014-06-07T07:11:31.768235Z| kanemoto| cont.c : keep context.uc_stack.ss_sp and context.uc_stack.ss_size for later use. 
+46372| 2014-06-07T03:51:57.565520Z| nobu| io.c: truncate before appending  * io.c (read_all): truncate the buffer before appending read data,   instead of truncating before reading.   [ruby-core:55951] [Bug #8625]
+46371| 2014-06-07T03:29:00.379353Z| nobu| digest.c: call to_s once  * ext/digest/digest.c (rb_digest_instance_equal): no need to call   `to_s` twice.  [Bug #9913]
+46370| 2014-06-07T02:41:01.862510Z| akr| * object.c (rb_mod_initialize_clone): Override Kernel#initialize_clone   to avoid an exception on Class.new.freeze.clone.to_s.   Reported by Andrew Grimm.  [ruby-core:41858] [Bug #5828]  
+46369| 2014-06-06T21:05:56.186718Z| svn| * 2014-06-07
+46368| 2014-06-06T21:05:48.353049Z| eregon| digest.c: fix #== for non-string arguments  * ext/digest/digest.c (rb_digest_instance_equal):   fix #== for non-string arguments. [ruby-core:62967] [Bug #9913] * test/digest/test_digest.rb: add test for above.
+46366| 2014-06-06T13:19:31.536235Z| nobu| node.h: remove NODE_PRIVATE_RECV  * compile.c (private_recv_p): check by node type, instead of a   magic number. * node.h (NODE_PRIVATE_RECV), parse.y (attrset_gen): remove
+46365| 2014-06-06T08:07:13.423278Z| nobu| compile.c, parse.y: private op assign  * compile.c (iseq_compile_each), parse.y (new_attr_op_assign_gen):   allow op assign to a private attribute.   [ruby-core:62949] [Bug #9907]
+46364| 2014-06-06T07:58:35.277983Z| nobu| test_assignment.rb: assignment to private attribute  * test/ruby/test_assignment.rb (test_assign_private_self): test   for r3509, assignment to private attribute is allowed iff its   receiver is literal `self`.
+46363| 2014-06-06T07:58:31.700424Z| nobu| test_assignment.rb: split test_assign  * test/ruby/test_assignment.rb (test_assign): split by assignment   forms.
+46362| 2014-06-06T07:54:37.552806Z| nobu| parse.y: attr_receiver  * parse.y (aryset_gen): use `attr_receiver()`.
+46361| 2014-06-06T06:05:19.357476Z| nobu| node.h: NODE_PRIVATE_RECV  * node.h (NODE_PRIVATE_RECV): name a magic number, `self` as the   receiver of a setter method call.  * compile.c (private_recv_p), parse.y (attr_receiver): use the   named macro.
+46360| 2014-06-06T04:39:37.687729Z| nobu| io.c: not shorten buffer unless succeeded  * io.c (io_setstrbuf, io_read): should not shorten the given buffer until   read succeeds.  [ruby-core:55951] [Bug #8625]
+46359| 2014-06-05T22:43:08.946031Z| svn| * 2014-06-06
+46358| 2014-06-05T22:42:58.736136Z| tenderlove| * ext/psych/lib/psych/visitors/yaml_tree.rb: dump empty symbols with a   tag so that they can be parsed on input. [Bug #9873] [ruby-core:62825] * test/psych/test_symbol.rb: test for change
+46357| 2014-06-05T09:16:57.856199Z| akr| Join a thread. 
+46356| 2014-06-05T07:14:53.820813Z| ko1| * gc.c (gc_page_sweep): refactoring. * gc.c (gc_page_sweep): should not set, but add final_slots into   sweep_page->final_slots.  
+46355| 2014-06-05T05:36:28.228387Z| nobu| version.c: show malloc_conf  * configure.in (jemalloc): check for the header regardless drop-in   libjemalloc is found, for `malloc_conf` declaration. * version.c (ruby_show_version): show `malloc_conf` if set.   [Feature #9113]
+46354| 2014-06-05T05:16:46.405268Z| nobu| configure.in, missing.h: jemalloc mangling  * configure.in (with-jemalloc): also check for header, for ABIs   which JEMALLOC_MANGLE is needed, i.e., Mach-O and PE-COFF   platforms.  [ruby-core:62939] [Feature #9113] * include/ruby/missing.h: include alternative malloc header to   replace memory management functions. * dln.c, io.c, parse.y, st.c: undef malloc family before   re-definition to suppress warnings.
+46353| 2014-06-05T03:53:25.214708Z| hsbt| * man/ruby.1: remove rubyforge entry.
+46352| 2014-06-05T03:47:46.503592Z| hsbt| * misc/README: use github link instead of rubyforge.
+46351| 2014-06-05T01:05:07.598197Z| ko1| * gc.c (obj_free): check also FL_PROMOTED bit by RVALUE_OLD_P().  
+46350| 2014-06-04T19:34:14.701183Z| svn| * 2014-06-05
+46349| 2014-06-04T19:34:03.672180Z| normal| configure.in: add --with-jemalloc option  * configure.in: add --with-jemalloc option   [ruby-core:62912]
+46348| 2014-06-04T13:33:20.360756Z| ko1| * gc.c: introduce RZombie to manage zombie objects.   Rewrite finalizing logics with this type. * gc.c (gc_verify_internal_consistency): verify zombie (finalizing)   objects count.  
+46347| 2014-06-04T13:11:55.359813Z| kazu| fix typo [ci skip]
+46346| 2014-06-04T13:09:57.966465Z| nobu| re.c: consider name encoding  * re.c (match_aref, rb_reg_regsub): consider encoding of captured   names, encoding-incompatible should not match.   [ruby-dev:48278] [Bug #9903]
+46345| 2014-06-04T12:33:18.594074Z| nobu| re.c: reduce new strings  * re.c (match_aref, rb_reg_regsub): reduce new strings creation   for exceptions.
+46344| 2014-06-04T12:23:57.485565Z| nobu| re.c: fix name with NUL  * re.c (match_aref): should not ignore name after NUL byte.   [ruby-dev:48275] [Bug #9902]
+46343| 2014-06-03T19:08:46.274584Z| svn| * 2014-06-04
+46342| 2014-06-03T19:08:40.386774Z| nobu| vm.c: return the result hash  * vm.c (core_hash_merge_kwd): should return the result hash, which   may be converted from and differ from the given argument.   [ruby-core:62921] [Bug #9898]
+46341| 2014-06-03T14:33:51.480335Z| akr| +       * ruby.c (load_file_internal2): Extracted from load_file_internal. +         (load_file_internal): Invoke load_file_internal2 using rb_protect. +         Close an opened FD if load_file_internal2 raises an exception. 
+46340| 2014-06-03T10:17:18.765540Z| ko1| * gc.c (rb_objspace_free): should not rest_sweep() here.   Some data structures are already freed.  
+46339| 2014-06-03T09:47:54.549588Z| ko1| * test/ruby/test_gc.rb: allocate more objects to invoke GC by newobj.   GC allows extending pages depends on heap_increment.  
+46338| 2014-06-03T09:13:39.629758Z| ko1| revert r46332 because RVALUE_OLD_P() returns int by r46334
+46337| 2014-06-03T09:02:21.492717Z| ko1| * gc.c (rb_gc_call_finalizer_at_exit): add   gc_verify_internal_consistency() when RGENGC_CHECK_MODE >= 2.  
+46336| 2014-06-03T09:00:53.269511Z| ko1| * gc.c: change the counting method for young objects.   clear counter at the beggining of every GC and   count promoted (infant->young) objects.   Some promotions (infant->young) are transition of promoting to old   objects. We should not count such promotions.   With this technique, we don't need to check young objects   at obj_free().  
+46335| 2014-06-03T07:50:23.738542Z| ko1| * gc.c: add verifying counters code in gc_verify_internal_consistency().   gc_verify_internal_consistency() counts all   - live objects   - young objects (if age2 promotion)   - old objects   in all pages and compares with objspace managing counters. * gc.c (gc_after_sweep): do gc_verify_internal_consistency()   when RGENGC_CHECK_MODE >= 2.  
+46334| 2014-06-03T07:44:19.692787Z| nobu| gc.c: int for simple predicates  * gc.c: use int for simple predicate functions instead of VALUE.
+46333| 2014-06-03T07:44:17.657224Z| nobu| ChangeLog: remove garbages
+46332| 2014-06-03T07:37:44.143223Z| ko1| * gc.c (rb_gc_force_recycle): we only need to know the result (0/1)   of RVALUE_OLD_P(). clang fails to compile it because is_old is   `int' but RVALUE_OLD_P() returns VALUE.  
+46331| 2014-06-03T04:19:57.070847Z| shugo| 	* lib/net/imap.rb (body_type_1part): Gmail IMAP reports a body 	  type as "MIXED" followed immediately by params 	  [ruby-core:62864] [Bug #9885]
+46330| 2014-06-03T04:19:21.164728Z| ko1| * gc.c (objspace_live_slot): live slot count should not include final   slot (contains T_ZOMBIE) count.  
+46329| 2014-06-03T04:03:55.290324Z| ko1| * gc.c (obj_free): fix spacing.  
+46328| 2014-06-03T04:00:18.484953Z| ko1| * gc.c (check_gen_consistency): fix error message.  
+46327| 2014-06-03T03:55:04.320817Z| ko1| * gc.c: count old/young objects more correctly. * gc.c (RVALUE_DEMOTE_FROM_OLD): decrement old object count. * gc.c (RVALUE_DEMOTE_FROM_YOUNG): decrement young object count. * gc.c (rb_gc_resurrect): increment old object count. * gc.c (gc_marks_body): should not add old object count.   This code is completely my misunderstanding. * gc.c (rb_gc_force_recycle): decrement young or old object count   correctly.  
+46326| 2014-06-03T03:29:12.384367Z| ko1| * test/ruby/memory_status.rb: add $LOAD_PATH to load test/unit   correctly for fiddle/import unavailable environments.  
+46325| 2014-06-03T00:48:29.481869Z| usa| * test/openssl/test_ssl.rb (OpenSSL::TestSSL#test_verify_result):   shouldn't use same server for respective tests, because the 1st   test sometimes kills the server main loop silently.   [Bug #9881] [ruby-dev:48266] 
+46324| 2014-06-02T22:35:17.698430Z| usa| * win32/win32.c (rb_w32_conv_from_wchar): follow nobu's previous commit.   hey nobu, why don't you write Changelog for such serious changes? 
+46323| 2014-06-02T20:23:52.968786Z| nobu| encoding.c: move ruby_encoding_index stuff  * encoding.c: move `ruby_encoding_index` stuff from   include/ruby/encoding.h to hide the extra field.
+46322| 2014-06-02T20:23:47.720798Z| nobu| encoding.h: constify rb_encoding  * include/ruby/encoding.h: constify `rb_encoding` itself, not only   arguments.
+46321| 2014-06-02T16:38:42.362381Z| svn| * 2014-06-03
+46320| 2014-06-02T16:38:31.602026Z| zzak| * README.EXT: [DOC] Add rb_call_super when subclassing from @robin850   [Fixes GH-623] https://github.com/ruby/ruby/pull/623 [ci skip] 
+46318| 2014-06-02T13:47:44.571543Z| kazu| fix a typo [ci skip]
+46317| 2014-06-02T13:46:33.158995Z| kazu| fix usage
+46316| 2014-06-02T13:46:22.493276Z| kazu| fix typo [ci skip]
+46315| 2014-06-02T11:34:50.892609Z| akr| Join threads. 
+46314| 2014-06-02T08:17:55.669692Z| ko1| * vm.c (ruby_vm_destruct): remove useless call of   rb_gc_force_recycle().   At this line, a VM object is already freed   (is changed to T_NONE) by rb_gc_call_finalizer_at_exit().  
+46313| 2014-06-02T06:51:41.737393Z| ko1| * eval.c (rb_using_refinement): add write-barriers for   cref->nd_refinements.  
+46312| 2014-06-02T03:29:13.561661Z| hsbt| * CONTRIBUTING.md: added contibuting guide for github. [fix GH-625]
+46311| 2014-06-02T00:43:29.805849Z| tmm1| xmlrpc/client: fix documentation typo
+46310| 2014-06-01T22:31:30.733687Z| akr| * test/ruby/envutil.rb (default_warning): New method.  * test/ruby/test_autoload.rb: Use EnvUtil.default_warning.  
+46309| 2014-06-01T22:06:11.645206Z| nobu| constify rb_encoding and OnigEncoding  * include/ruby/encoding.h: constify `rb_encoding` arguments. * include/ruby/oniguruma.h: constify `OnigEncoding` arguments.
+46308| 2014-06-01T21:50:32.301008Z| nobu| gmake.mk: fix argument  * defs/gmake.mk: fix missing loop variable of `foreach`.
+46307| 2014-06-01T19:32:17.750285Z| nobu| gmake.mk: universal assembler rules  * Makefile.in (CFLAGS_NO_ARCH): split from ARCH_FLAG.  * defs/gmake.mk: define assembler rules per architectures for   universal binaries.
+46306| 2014-06-01T19:32:15.792450Z| nobu| gmake.mk: universal cpp rules  * defs/gmake.mk: define preprocessing rules per architectures for   universal binaries.
+46300| 2014-06-01T15:41:42.131860Z| akr| Use EnvUtil.suppress_warning. 
+46299| 2014-06-01T15:25:12.405637Z| akr| Suppress a warning. 
+46298| 2014-06-01T15:14:02.360997Z| svn| * 2014-06-02
+46297| 2014-06-01T15:13:59.472214Z| akr| Suppress warnings. 
+46296| 2014-06-01T14:08:35.293599Z| akr| Stop DRb service. 
+46295| 2014-06-01T13:47:04.152028Z| akr| Finish threads. 
+46294| 2014-06-01T12:09:08.551951Z| akr| Suppress a warning. 
+46293| 2014-06-01T03:07:58.567031Z| akr| * test/drb: Wrap tests definitions by DRbTests module.  This makes   several tests (ACLEntryTest, TestBug4409, etc.) easier to understand   that they are tests for DRb.  
+46292| 2014-06-01T02:37:27.870647Z| akr| * lib/rinda/ring.rb (RingFinger#make_socket): Close the socket on exception.  
+46291| 2014-06-01T01:21:18.585296Z| akr| Close FDs. 
+46290| 2014-05-31T23:54:12.096741Z| akr| Join threads before close pipes.  closing a FD interrupts threads which uses the FD. rb_thread_io_blocking_region (for write()) checks an interrupt after write() is finished. So, joining the thread after closing() may raise "IOError: stream closed".  
+46289| 2014-05-31T21:55:53.229432Z| nobu| parse.y: no duplicate attrset ID  * parse.y (intern_str): dynamic attrset ID is registered by   `rb_id_attrset()` already, so no further registration is needed.   [ruby-core:62861]
+46288| 2014-05-31T19:54:55.769077Z| zzak| * lib/English.rb: [DOC] $LOADED_FEATURES moved to load.c [Fixes GH-620]   Patch submitted by @leafac in https://github.com/ruby/ruby/pull/620 * doc/globals.rdoc: Added $LOADED_FEATURES to list 
+46287| 2014-05-31T15:31:50.403990Z| svn| * 2014-06-01
+46286| 2014-05-31T15:31:46.933765Z| akr| Join threads. 

@@ -1,0 +1,180 @@
+46285| 2014-05-31T14:48:12.251530Z| akr| Join threads. 
+46284| 2014-05-31T14:48:11.250211Z| nobu| configure.in: remove rb_cv_typeof  * configure.in (rb_cv_typeof): no longer needed because of   AC_C_TYPEOF.
+46283| 2014-05-31T14:48:06.135347Z| nobu| ChangeLog: fix typo
+46282| 2014-05-31T14:28:19.334449Z| akr| Join threads. 
+46281| 2014-05-31T14:05:54.546750Z| akr| Join threads. 
+46280| 2014-05-31T13:31:32.142755Z| akr| * test/lib/leakchecker.rb: Leak checker extracted from   test/lib/minitest/unit.rb.  
+46279| 2014-05-31T13:30:48.167201Z| naruse| don't remove test results  r46180 removed dots but they express the result of tests: don't remove them. Moreover I don't understand why `read` is still used.  http://u64.rubyci.org/~chkbuild/ruby-trunk/log/20140530T200301Z.fail.html.gz
+46278| 2014-05-31T12:24:28.021101Z| shyouhei| * thread.c (rb_thread_atfork_internal): My compiler complains   about this variable being used before initialized. I looked at   the code and expanded the macro and turned out it was actually   USED for pointer arithmetic, not dereferenced.  So this was   never a serious bug.  But is annoying indeed to see warnings   every time.  I added `=0` and all went healthy.  * configure.in: Also, I found that the problematic macro expansion   only happens when we lack __typeof__ C extension, which shall   not be the case of my compiler.  I added AC_CTYPEOF to kick ass.  
+46277| 2014-05-31T07:36:51.503268Z| hsbt| * lib/ipaddr.rb: extracted inline tests into test dir. * test/test_ipaddr.rb: ditto.
+46276| 2014-05-31T07:30:34.346005Z| hsbt| * ext/digest/lib/digest/hmac.rb: extracted inline tests into test dir. * test/digest/test_digest_hmac.rb: ditto.
+46275| 2014-05-31T07:03:13.079231Z| hsbt| * test/test_syslog.rb: remove executable.
+46274| 2014-05-31T00:01:32.831434Z| akr| Join threads. 
+46273| 2014-05-30T23:58:34.627992Z| nobu| unicode.c: no initialization  * enc/unicode.c (init_case_fold_table): no longer need to   initialize tables at runtime.
+46272| 2014-05-30T23:58:24.670242Z| nobu| case-folding.rb: perfect hash for case unfolding3  * enc/unicode/case-folding.rb (lookup_hash): make perfect hash to   lookup case unfolding table 3.
+46271| 2014-05-30T23:58:14.319940Z| nobu| case-folding.rb: perfect hash for case unfolding2  * enc/unicode/case-folding.rb (lookup_hash): make perfect hash to   lookup case unfolding table 2.
+46270| 2014-05-30T23:58:01.003095Z| nobu| case-folding.rb: perfect hash for case unfolding1  * enc/unicode/case-folding.rb (lookup_hash): make perfect hash to   lookup case unfolding table 1.
+46269| 2014-05-30T23:57:45.074005Z| nobu| case-folding.rb: perfect hash for case folding  * enc/unicode/case-folding.rb (lookup_hash): make perfect hash to   lookup case folding table.
+46268| 2014-05-30T23:56:00.796042Z| nobu| case-folding.rb: merge tables  * enc/unicode/case-folding.rb (print_table): merge non-locale and   locale tables, and reduce initializing loops.
+46267| 2014-05-30T23:55:00.710406Z| nobu| case-folding.rb: modularize  * enc/unicode/case-folding.rb (CaseFolding): modularize, and add   --output-file option.
+46266| 2014-05-30T23:49:54.362082Z| nobu| case-folding.rb: conversion script  * enc/unicode/case-folding.rb: script to convert CaseFolding.txt,   tranlated from CaseFolding.py.
+46265| 2014-05-30T23:32:19.872514Z| akr| * test/lib/minitest/unit.rb: Check Tempfile leaks for each test method   again.  
+46264| 2014-05-30T18:52:30.545290Z| zzak| * lib/delegate.rb: [DOC] Document raise in Delegator class   Patch by @lucasmazza. [Fixes GH-621]   https://github.com/ruby/ruby/pull/621 
+46263| 2014-05-30T15:06:07.948344Z| naruse| add --disable-gem
+46262| 2014-05-30T15:03:40.205423Z| svn| * 2014-05-31
+46261| 2014-05-30T15:03:34.664901Z| akr| Close FDs. 
+46260| 2014-05-30T14:50:42.940956Z| akr| Close FDs. 
+46259| 2014-05-30T14:28:44.706023Z| akr| Close sockets. 
+46258| 2014-05-30T14:17:46.535447Z| akr| Close pipes. 
+46257| 2014-05-30T14:06:39.890982Z| akr| Use the block form of Open3.popen3 to close FDs. 
+46256| 2014-05-30T13:48:06.201121Z| akr| Join threads. 
+46255| 2014-05-30T13:28:39.760509Z| akr| Join threads, not kill. 
+46254| 2014-05-30T12:51:49.428847Z| akr| test/io/console/test_io_console.rb: Close FDs. 
+46253| 2014-05-30T12:32:48.973772Z| akr| * lib/webrick/server.rb: Use a pipe to detect server shutdown.   shutdown() or close() for listening socket is not a reliable.   Actually, both doesn't work (doesn't wake up select()) on   DragonFly BSD 3.6.2.  * test/webrick/utils.rb: :ShutdownSocketWithoutClose is not required   now to immediate server shutdown detection.   This fixes fd leaks.  * test/net/http/utils.rb: Ditto.  
+46252| 2014-05-30T12:03:40.188826Z| akr| svn:ignore property added. 
+46251| 2014-05-30T12:01:09.089110Z| akr| * test/lib/minitest/unit.rb (check_fd_leak): Sort the inspected   objects list for a FD. 
+46250| 2014-05-30T09:08:23.026498Z| akr| * test/lib/minitest/unit.rb (check_fd_leak): Try GC to delete leaked   FDs. 
+46249| 2014-05-30T08:52:58.576314Z| naruse| force_encoding to get the log of failure by Encoding::CompatibilityError  https://travis-ci.org/ruby/ruby/jobs/26361118
+46248| 2014-05-30T06:27:23.565812Z| nobu| minitest/unit.rb: defer requiring -test-  * test/lib/minitest/unit.rb (find_fds): defer requiring a library   under "-test-" until needed, or can't work in other (installed)   ruby.  grep doesn't need separated map.
+46247| 2014-05-30T03:18:08.906763Z| nobu| fileno.c: suppress warnings  * ext/-test-/dir/fileno.c (dir_check): suppress unused-function   warnings, used only when dirfd() is available.
+46246| 2014-05-30T03:18:07.547492Z| nobu| printf.c: suppress warnings  * ext/-test-/printf/printf.c (printf_test_call): suppress   maybe-uninitialized warnings.
+46245| 2014-05-30T03:06:47.269661Z| naruse| * test/lib/test/unit/parallel.rb (_run_suite): orig_stdout may be nil   though I don't know the reason.
+46244| 2014-05-30T02:55:26.957547Z| nobu| test_string.rb: move and add assertions  * test/ruby/test_string.rb (test_slice): move the assertion for   [Bug #9882], and more assertion for `ascii_only?` too, as   pointed out by Heesob Park in [ruby-core:62846].
+46243| 2014-05-30T02:33:38.253412Z| nobu| string.c: reset code range  * string.c (rb_str_substr): need to reset code range for shared   string too, not only copied string.   [ruby-core:62842] [Bug #9882]
+46242| 2014-05-30T02:32:37.559840Z| nobu| test_beginendblock.rb: avoid leaking threads  * test/ruby/test_beginendblock.rb (test_endblock_raise): not only   kill, but also wait the end.
+46241| 2014-05-30T01:22:23.676407Z| nobu| erb.rb: ERB#result does not accept a proc.  * lib/erb.rb (result): [DOC] no longer accepts a Proc, as   Kernel.eval does not.  [fix GH-619]
+46240| 2014-05-29T22:28:47.287300Z| akr| * ext/-test-/dir: Dir#fileno implemented.  * test/lib/minitest/unit.rb (find_fds): Don't return the fd used to   scan /proc/$$/fd.  
+46239| 2014-05-29T19:49:22.968414Z| normal| remove empty rb_gc_mark_parser function  * parse.y (rb_gc_mark_parser): remove, empty since r8758 * internal.h: ditto, not usable from extensions since 2.0.0 * gc.c (gc_mark_roots): remove checkpoint for parser
+46238| 2014-05-29T15:45:29.117524Z| svn| * 2014-05-30
+46237| 2014-05-29T15:45:25.899651Z| usa| * vm_trace.c, vm.c, thread.c: get rid of (maybe false positive) warnings about   using uninitialized var with VC++. 
+46235| 2014-05-29T14:59:24.532679Z| akr| test/test_syslog.rb: Close fds. 
+46234| 2014-05-29T14:47:28.006026Z| akr| test/readline/test_readline.rb: Close fds. 
+46233| 2014-05-29T14:27:53.264547Z| nobu| signal.c: return proper member  * signal.c (ruby_signal): should return either `old.sa_sigaction`   or `old.sa_handler`, depending on whether `SA_SIGINFO` is set in   `old.sa_flags`, because they may not be a union.   [ruby-core:62836] [Bug #9878]
+46232| 2014-05-29T14:13:20.589161Z| akr| * io.c (pipe_open): Close pipes when rb_execarg_fixup() raises   an exception.   (rb_execarg_fixup_v): New function.  
+46231| 2014-05-29T13:38:39.969866Z| akr| test/test_pty.rb: Close fds. 
+46230| 2014-05-29T13:26:02.516702Z| akr| * test/lib/minitest/unit.rb (capture_subprocess_io): Close fds. 
+46229| 2014-05-29T13:12:38.738182Z| akr| test/logger/test_logdevice.rb: Close fds. 
+46228| 2014-05-29T12:42:14.620960Z| akr| test/io/nonblock/test_flush.rb: Close fds. 
+46227| 2014-05-29T12:07:39.441776Z| akr| test/fileutils/test_fileutils.rb: Close fds. 
+46225| 2014-05-29T11:29:47.794281Z| akr| * io.c (rb_io_s_pipe): Close pipes if io_encoding_set() raises an   exception.   (io_encoding_set_v): New function.  
+46224| 2014-05-29T10:44:59.202691Z| akr| * lib/csv.rb (CSV.open): Close the opened file when an exception occur. 
+46223| 2014-05-29T10:32:19.626000Z| akr| * ext/openssl/lib/openssl/ssl.rb (SSLServer#accept): Close a socket   if any exception occur.   
+46222| 2014-05-29T00:58:21.106740Z| nobu| configure.in: fix messages  * configure.in (RUBY_FUNC_ATTRIBUTE): show the attribute name in   the message if the macro name is not given.  fix up r45608.
+46221| 2014-05-28T23:35:43.894348Z| nobu| localeinit.c: revert r46202
+46220| 2014-05-28T22:59:07.196457Z| akr| Suppress warnings. 
+46219| 2014-05-28T20:08:56.027866Z| normal| include/ruby/ruby.h: hide Symbol internals  This is too new to be a compatibility problem.  * include/ruby/ruby.h: Hide Symbol internals.   (struct RSymbol): moved to internal.h   (RSYMBOL): ditto
+46218| 2014-05-28T15:42:09.924154Z| akr| * ext/socket/unixsocket.c (rsock_init_unixsock): Open a socket   after path length check.   This fixes a fd leak by TestSocket_UNIXSocket#test_too_long_path.  
+46217| 2014-05-28T15:06:43.240825Z| svn| * 2014-05-29
+46216| 2014-05-28T15:06:39.784199Z| akr| Close fds. 
+46212| 2014-05-28T14:06:28.705065Z| akr| * test/ruby/test_io.rb (test_flush_in_finalizer1): Use   ObjectSpace.each_object to close files.   GC.start is not reliable.  
+46211| 2014-05-28T11:17:48.682552Z| akr| No need to kill a thread. 
+46210| 2014-05-28T10:02:54.851479Z| akr| * lib/net/imap.rb (Net::IMAP#initialize): Close the opened socket when   any exception occur.   This fixes a fd leak by IMAPTest#test_imaps_post_connection_check   which start_tls_session() raises an exception.   
+46209| 2014-05-28T09:09:26.102523Z| akr| * ext/openssl/ossl_ssl.c (ossl_ssl_close): Fix sync_close to work   when SSL is not started.   This fix the fd leak by test_https_proxy_authentication in   test/net/http/test_https_proxy.rb.  
+46208| 2014-05-28T08:03:55.370788Z| nobu| drbtest.rb: avoid leaking threads  * test/drb/drbtest.rb (test_06_timeout): clean up worker threads   to avoid leaking threads.
+46207| 2014-05-28T06:22:09.248946Z| nobu| test/rake: avoid leaking threads  * test/rake/test_rake_task.rb (teardown): clean up thread pool to   avoid leaking threads.
+46206| 2014-05-28T06:05:43.811672Z| nobu| test/rake: avoid leaking threads  * test/rake/test_rake_multi_task.rb (teardown): clean up thread   pool to avoid leaking threads.  * test/rake/test_rake_task_with_arguments.rb (teardown): ditto.  * test/rake/test_rake_thread_pool.rb: ditto.
+46205| 2014-05-28T05:39:45.587897Z| nobu| eval_intern.h: suppress warning by gcc 4.6  * eval_intern.h (VAR_FROM_MEMORY, VAR_INITIALIZED): gcc 4.6 also   seems to warn false maybe-uninitialized.
+46204| 2014-05-28T05:11:05.621135Z| nobu| test_socket.rb: ignore interface without address  * test/socket/test_socket.rb (test_udp_server): ignore interface   with no address assigned.
+46203| 2014-05-28T04:34:22.031541Z| zzak| [DOC] Typo in change log [ci skip] Although a mint flavored test suite sounds delicious, I believe it's supposed to be minitest! 
+46202| 2014-05-28T04:27:45.441412Z| nobu| localeinit.c: fallback filesystem encoding to UTF-8  * localeinit.c (Init_enc_set_filesystem_encoding): fallback to   UTF-8 on Mac OS X, just for convenience sake.
+46199| 2014-05-28T04:20:35.046583Z| nobu| test_dir_m17n.rb: assert_raw_file_name  * test/ruby/test_dir_m17n.rb (assert_raw_file_name): rename to   show caller method in failure messages.
+46198| 2014-05-28T04:20:31.763593Z| nobu| envutil.rb: connect caller to backtrace  * test/ruby/envutil.rb (assert_separately): append current caller   to backtrace show proper method name.
+46196| 2014-05-28T03:05:48.704640Z| nobu| test_thread.rb: move thread switch test  * test/ruby/test_thread.rb (test_switch_while_busy_loop): move   from test/test_timeout.rb.  [Bug #1402]  * test/test_timeout.rb (test_timeout): no longer related to   [Bug #1402].  [Bug #8523]
+46195| 2014-05-28T01:48:11.472011Z| normal| vm.c: remove rb_vm_living_threads_foreach function  Shorter code with fewer callbacks and casts should be more readable.  * vm.c (rb_vm_living_threads_foreach): remove function   [ruby-core:62745] * thread.c (terminate_i): remove * thread.c (terminate_all): implement (inlines old terminate_i) * thread.c (rb_thread_terminate_all): use terminate_all * thread.c (rb_thread_fd_close_i): remove * thread.c (rb_thread_fd_close): iterate inline * thread.c (thread_list_i): remove * thread.c (rb_thread_list): iterate inline * thread.c (rb_thread_atfork_internal): iterate inline * thread.c (terminate_atfork_i): update types to remove casts * thread.c (terminate_atfork_before_exec_i): ditto * thread.c (struct thgroup_list_params): remove definition * thread.c (thgroup_list_i): remove * thread.c (thgroup_list): iterate inline * thread.c (check_deadlock_i): remove * thread.c (debug_deadlock_check): implement (inlines check_deadlock_i) * thread.c (debug_i): remove * thread.c (rb_check_deadlock): iterate inline * vm.c (vm_mark_each_thread_func): remove * vm.c (rb_vm_mark): iterate inline * vm_core.h (rb_vm_living_threads_remove): remove * vm_trace.c (clear_trace_func_i): remove * vm_trace.c (rb_clear_trace_func): iterate inline
+46194| 2014-05-28T00:53:11.479892Z| normal| signal: remove window for SignalException on IGNORE  * signal.c (signal_exec): ignore immediate cmd for SIG_IGN * signal.c (trap_handler): set cmd to true for SIG_IGN * signal.c (trap): handle nil and true values for oldcmd   [Bug #9835]
+46193| 2014-05-27T16:17:13.879533Z| akr| Use Tempfile#close!. 
+46191| 2014-05-27T16:03:35.309950Z| akr| * lib/tempfile.rb (Tempfile#inspect): Show "(closed)" if the tempfile   is closed.  
+46189| 2014-05-27T15:49:13.878848Z| akr| * test/lib/minitest/unit.rb: Use Tempfile#close! instead of   Tempfile#unlink to close file descriptors.  * test/openssl/test_config.rb: Ditto.  * test/ruby/test_io.rb: Ditto.  
+46184| 2014-05-27T15:15:54.251062Z| akr| Avoid a shadowing warning. 
+46183| 2014-05-27T15:15:14.603752Z| svn| * 2014-05-28
+46182| 2014-05-27T15:14:59.359529Z| akr| * lib/net/ftp.rb (transfercmd): Close TCP server socket even if an   exception occur.  
+46181| 2014-05-27T14:51:08.672039Z| akr| * lib/cgi/core.rb: Use Tempfile#close(true) instead of Tempfile#unlink   to close file descriptors.  
+46180| 2014-05-27T14:43:15.522770Z| nobu| parallel.rb: do not split messages  * test/lib/test/unit/parallel.rb (Test::Unit::Worker#_run_suite):   get rid of splitting leak checking messages.
+46179| 2014-05-27T14:06:48.933310Z| nobu| parse.y: refine error message  * parse.y (parser_number_literal_suffix): refine error message for   extra dot and digits.
+46178| 2014-05-27T13:45:04.581682Z| akr| * test/rexml: Avoid fd leaks. 
+46177| 2014-05-27T13:24:39.012078Z| kou| * test/rexml/test_document.rb: Indent. 
+46176| 2014-05-27T13:15:58.355878Z| kou| * test/rexml/test_document.rb: Wrap by REXMLTests module. 
+46175| 2014-05-27T13:12:32.851486Z| kou| * test/rexml/test_encoding_2.rb: Remove a needless file. 
+46174| 2014-05-27T13:10:55.163117Z| kou| * test/rexml/test_contrib.rb: Indent. 
+46173| 2014-05-27T12:29:19.716649Z| naruse| * ext/socket/ifaddr.c (ifaddr_inspect_flags): support IFF_SIMPLEX.
+46172| 2014-05-27T12:29:08.621974Z| naruse| use Socket.getifaddrs to show interface names and so on
+46171| 2014-05-27T12:07:40.860154Z| kou| * test/rexml/: Use REXMLTests as wrapping module for REXML tests.   I avoid using the same module for library in test because   it provides "include REXML" environment in test. Normally,   users don't use REXML on "include REXML" environment. So I   don't want to write tests on "include REXML" environment. 
+46170| 2014-05-27T12:01:25.659846Z| kou| * test/rexml/test_comment.rb: Remove needless REXML module wrapping. 
+46169| 2014-05-27T11:57:41.155715Z| kou| * test/openssl/test_pkcs7.rb: Fix inverted expected and actual values. 
+46168| 2014-05-27T11:28:34.452677Z| usa| * test/ruby/test_io.rb (test_flush_in_finalizer1): some opened fds are   remain before GC, so unlink the tempfile is failed. 
+46167| 2014-05-27T10:34:43.095667Z| usa| * tool/merger.rb: unlink temporary file explicitly. 
+46166| 2014-05-27T10:21:10.652236Z| akr| Wrap REXML test classes by REXML module. 
+46165| 2014-05-27T10:09:55.871305Z| akr| * io.c (rb_io_autoclose_p): Don't raise on frozen IO.  * test/lib/minitest/unit.rb: IO#autoclose? may raise IOError.  
+46164| 2014-05-27T10:03:09.009944Z| hsbt| * test/openssl/test_pair.rb: Modify TestSSL#test_read_and_write   to handle partial sysreads. [Bug #7398][ruby-core:49563] * test/openssl/test_ssl.rb: ditto.
+46163| 2014-05-27T09:48:30.966126Z| svn| * remove trailing spaces.
+46162| 2014-05-27T09:48:27.515091Z| hsbt| * test/openssl/test_pkcs7.rb: Add tests for PKCS7#type= and add_data.   [Feature #7399][ruby-core:49565]
+46161| 2014-05-27T09:33:54.885885Z| hsbt| * test/openssl/test_hmac.rb (test_binary_update): Added Test for   HMAC signing with UTF-8 String. [Bug #7512][ruby-core:50559]
+46160| 2014-05-27T08:34:11.988477Z| hsbt| * test/runner.rb: fixed randomly test failure.   [Bug #6573][ruby-core:45563]
+46159| 2014-05-27T08:00:19.675035Z| hsbt| * test/test_timeout.rb (test_timeout): inverted test condition.   [Bug #8523]
+46156| 2014-05-27T03:24:52.842185Z| akr| * test/lib/minitest/unit.rb: Show leaked file descriptors. 
+46151| 2014-05-27T02:12:59.195080Z| nobu| io.c: no error on frozen IO  * io.c (rb_io_fileno, rb_io_inspect): non-modification does not   error on frozen IO.  [ruby-dev:48241] [Bug #9865]
+46150| 2014-05-26T15:00:28.105361Z| svn| * 2014-05-27
+46149| 2014-05-26T15:00:23.849483Z| nobu| insns.def: fix typo  * insns.def (defineclass): fix typo in the instruction comment.   [fix GH-618]
+46148| 2014-05-26T14:45:51.148668Z| akr| Use Tempfile.create instead of Tempfile.new. 
+46147| 2014-05-26T14:36:40.445195Z| nobu| test/unit.rb: reduce error messages  * test/lib/test/unit.rb (non_options): reduce same error messages.
+46146| 2014-05-26T14:36:36.412716Z| nobu| ext_conf_builder.rb: fix tempfile leak  * lib/rubygems/ext/ext_conf_builder.rb (build): ensure to remove   temporary siteconf script.
+46145| 2014-05-26T14:36:26.802724Z| nobu| test/rdoc: avoid tempfile leaks  * test/rubygems/test_gem_package.rb: avoid tempfile leaks by using   `Tempfile.create` instead of `Tempfile.open`. * test/rubygems/test_gem_request_set.rb: ditto. * test/rubygems/test_gem_request_set_gem_dependency_api.rb: ditto.
+46144| 2014-05-26T14:36:22.288814Z| nobu| test/rubygems: remove tempfiles  * test/rubygems/test_gem_package_tar_header.rb: remove tempfiles. * test/rubygems/test_gem_package_tar_reader.rb: ditto. * test/rubygems/test_gem_package_tar_reader_entry.rb (teardown):   ditto. * test/rubygems/test_gem_package_tar_writer.rb (teardown): ditto.
+46143| 2014-05-26T13:33:06.242583Z| nobu| test/rdoc: avoid tempfile leaks  * test/rdoc/test_rdoc_parser.rb (test_class_for_forbidden): avoid   tempfile leaks by using `Tempfile.create` instead of   `Tempfile.open`. * test/rdoc/test_rdoc_rd_block_parser.rb (test_parse_include_subtree):   ditto. * test/rdoc/test_rdoc_rdoc.rb (test_parse_file_encoding): ditto. * test/rdoc/test_rdoc_rdoc.rb (test_parse_file_forbidden): ditto.
+46142| 2014-05-26T13:33:01.656737Z| nobu| test/rdoc: remove tempfiles  * test/rdoc/test_rdoc_encoding.rb (teardown): remove tempfiles. * test/rdoc/test_rdoc_markup_pre_process.rb (teardown): ditto. * test/rdoc/test_rdoc_parser_c.rb (teardown): ditto. * test/rdoc/test_rdoc_parser_changelog.rb (teardown): ditto. * test/rdoc/test_rdoc_parser_markdown.rb (teardown): ditto. * test/rdoc/test_rdoc_parser_rd.rb (teardown): ditto. * test/rdoc/test_rdoc_parser_ruby.rb (teardown): ditto. * test/rdoc/test_rdoc_parser_simple.rb (teardown): ditto.
+46141| 2014-05-26T13:17:16.478872Z| kazu| fix typos [ci skip]
+46140| 2014-05-26T12:59:18.520646Z| nobu| test_rinda.rb: revert stop_service  * test/rinda/test_rinda.rb (test_take_bug_8215): revert   `stop_service` for the time being.  need to reset   `current_server` to let test/drb work, probably.
+46139| 2014-05-26T08:40:37.286396Z| nobu| test_rinda.rb: fix leaked threads  * test/rinda/test_rinda.rb: join work threads not to leak threads.
+46138| 2014-05-26T08:04:02.983355Z| nobu| test_monitor.rb: fix leaked threads  * test/monitor/test_monitor.rb (test_killed_thread_in_synchronize):   join work threads not to leak threads.
+46137| 2014-05-26T07:38:57.818674Z| nobu| thread.c: inspect location  * thread.c (rb_thread_inspect): show the location of the block.
+46136| 2014-05-26T07:34:50.969186Z| usa| * test/ruby/test_file.rb: skip the test of atime on Windows, because   Windows delays updating atime about 1 hour.   see more details:     http://msdn.microsoft.com/en-us/library/windows/desktop/ms724290%28v=vs.85%29.aspx 
+46135| 2014-05-26T07:00:02.776632Z| nobu| thread.c: preserve encoding  * thread.c (rb_thread_inspect): preserve encoding of the class   name.
+46134| 2014-05-26T05:38:24.092846Z| nobu| test_imap.rb: fix leaked threads  * test/net/imap/test_imap.rb (imaps_test): join work threads not   to leak threads.
+46133| 2014-05-26T05:38:12.470188Z| nobu| test_http.rb: fix leaked threads  * test/net/http/test_http.rb (test_timeout_during_HTTP_session):   join work threads not to leak threads.
+46132| 2014-05-26T05:38:10.252688Z| nobu| test/ruby: fix leaked threads  * test/thread/test_backtrace.rb: join work threads not to leak   threads.
+46131| 2014-05-26T05:13:40.687513Z| nobu| test/ruby: fix leaked threads  * test/thread/test_{backtrace,beginendblock,proc,threadgroup}.rb:   join work threads not to leak threads.
+46130| 2014-05-26T05:01:33.407101Z| nobu| test/thread: fix leaked threads  * test/thread/test_{queue,sync}.rb: join work threads not to leak   threads.
+46129| 2014-05-26T04:35:17.618152Z| nobu| pty.c: do nothing if terminated already  * ext/pty/pty.c (pty_detach_process): if the child process has   terminated already, return immediately without starting a thread   to detach it.
+46128| 2014-05-26T04:03:52.745214Z| nobu| win32/Makefile.sub: copy enc/jis/props.h  * win32/Makefile.sub (enc/jis/props.h): nmake needs special rule   to copy from the source directory, because it can't handle VPATH.
+46127| 2014-05-26T03:42:27.936874Z| nobu| minitest/unit.rb: fix leaking tempfile  * test/lib/minitest/unit.rb (capture_subprocess_io): opened files   can not be unlinked on Windows.
+46126| 2014-05-26T03:25:38.410536Z| nobu| lib/optionparser.rb  * lib/optionparser.rb, lib/optparse.rb (OptParse): aliases.   [ruby-core:62751] [Feature #9864]
+46125| 2014-05-26T02:58:15.159368Z| nobu| test_features.rb: fix up r46123  * test/csv/test_features.rb: no longer `nil` is valid data source   for `CSV.new`.  [GH-580]
+46124| 2014-05-25T23:00:04.371743Z| akr| * test/lib/minitest/unit.rb: Show Finished threads line-by-line. 
+46123| 2014-05-25T16:41:40.667252Z| zzak| * lib/csv.rb: Reject nil as data source for CSV.new, patch by @Peeja.   [Fixes GH-580] https://github.com/ruby/ruby/pull/580 
+46122| 2014-05-25T16:16:38.373085Z| akr| Show leaked threads line-by-line. 
+46121| 2014-05-25T16:03:33.777528Z| svn| * 2014-05-26
+46120| 2014-05-25T16:03:23.734013Z| akr| * test/lib/minitest/unit.rb: Show leaked tempfiles line-by-line. 
+46119| 2014-05-25T14:32:03.059331Z| akr| Remove tempfiles. 
+46118| 2014-05-25T14:16:02.792781Z| akr| * test/lib/minitest/unit.rb (MiniTest::Assertions#diff): Remove   tempfiles.  
+46117| 2014-05-25T14:00:16.351759Z| akr| Avoid tempfile leaks using Tempfile.create instead of Tempfile.open. 
+46116| 2014-05-25T13:53:25.321964Z| nobu| test_minitest_unit.rb: invoke by array form  * test/minitest/test_minitest_unit.rb (test_capture_subprocess_io):   invoke by array form.  quoting is not portable.
+46115| 2014-05-25T13:44:05.475965Z| akr| * test/lib/minitest/unit.rb: Check tempfile leak for each test class. 
+46114| 2014-05-25T11:31:52.144351Z| nobu| configure.in: do not disable ucontext.h  * configure.in (ac_cv_func_{getcontext,setcontext}): do not   disable ucontext.h entirely, but disable use of functions only.   `ucontext_t` is necessary in the signal handler now.
+46113| 2014-05-25T11:00:26.338331Z| nobu| signal.c: revert part of r46100  * signal.c (check_stack_overflow): revert part of r46100, the   previous condition was correct, and fix compilation error on   other architecture linux.  [ruby-core:62746] [Bug #9862]
+46112| 2014-05-25T08:15:08.984217Z| akr| * test/lib/minitest/unit.rb: Less ObjectSpace.each_object(Tempfile)   invocation.  
+46111| 2014-05-25T07:58:02.290580Z| akr| * test/lib/minitest/unit.rb: Use Thread.list instead of   ObjectSpace.each_object(Thread).  
+46110| 2014-05-25T07:32:26.600249Z| akr| * lib/rinda/ring.rb (Rinda::RingServer#shutdown): Join the killed   threads.  
+46109| 2014-05-25T06:27:14.821703Z| akr| * lib/webrick/utils.rb: Override the inspect method of the thread   used in WEBrick::Utils::TimeoutHandler.  
+46108| 2014-05-25T05:22:49.164055Z| akr| * test/openssl: Join threads. 
+46107| 2014-05-25T03:51:50.843013Z| nagachika| * test/fileutils/test_fileutils.rb (test_chown_dir_group_ownership_not_recursive):   fix typos on comment.
+46106| 2014-05-25T03:46:55.315280Z| nobu| report bug with machine regisiters  * error.c (rb_bug_context): new function to report bug with   context. * vm_dump.c (rb_vm_bugreport): accepts `ucontext_t` argument to   dump machine regisiters.  based on [GH-584]. * signal.c (sigbus, sigsegv): dump machine regisiters if available.
+46105| 2014-05-25T03:43:35.188251Z| hsbt| * ChangeLog: fixed wrong method name [ci skip]
+46104| 2014-05-25T03:34:27.575529Z| akr| * test/lib/minitest/unit.rb: Sort leaked threads and tempfiles. 
+46103| 2014-05-25T03:33:26.763403Z| svn| * properties.
+46102| 2014-05-25T03:33:22.054901Z| naruse| Revert "* lib/yaml.rb: Remove Psych::EngineManager [Bug #8344]"  zzak is not the maintainer of yaml. This reverts commit r46097.
+46101| 2014-05-25T03:15:49.819095Z| nobu| vm_dump.c: adjust style  * vm_dump.c (backtrace): adjust style, inserting breaks between   type, function name with its arguments, and its body.
+46100| 2014-05-25T03:15:32.722274Z| nobu| signal.c: fix stack overflow check on Mac OS X  * signal.c (check_stack_overflow): fix condition to use ucontext   register, mcontext_t dereference, and its member names, on Mac   OS X.
+46099| 2014-05-25T03:00:17.216643Z| zzak| * enumerator.c: [DOC] Fix example to show Enumerator#peek behavior   Patch by Erik Hollembeak [Bug #9814] [ci skip] 
+46098| 2014-05-25T02:56:36.074241Z| nobu| vsnprintf.c: fix string precision  * vsnprintf.c (BSD_vfprintf): fix string width when precision is   given.  as the result of `memchr` is NULL or its offset from the   start cannot exceed the size, the comparison was always false.   [ruby-core:62737] [Bug #9861]
+46097| 2014-05-25T02:33:51.341942Z| zzak| * lib/yaml.rb: Remove Psych::EngineManager [Bug #8344] * test/psych/*: ditto. 
+46096| 2014-05-25T01:36:05.254933Z| zzak| * doc/regexp.rdoc: [DOC] Clarify whitespace matching by @allolex   [Fixes GH-606] https://github.com/ruby/ruby/pull/606 [ci skip] 
+46095| 2014-05-25T01:20:30.512380Z| zzak| * enum.c: [DOC] Use #find in example to clarify alias by @rachellogie   Patch submitted via documenting-ruby/ruby#34 [ci skip] 
+46094| 2014-05-25T01:17:52.599882Z| zzak| * cont.c: [DOC] Fix rdoc in example for Fiber#transfer by @majjoha   Patch submitted via documenting-ruby/ruby#33 [ci skip] 
+46093| 2014-05-25T01:02:59.440759Z| zzak| * lib/irb.rb: [DOC] Fixed syntax error in example by @jasdeepsingh.   Patch submitted via documenting-ruby/ruby#32 [ci skip] 
+46092| 2014-05-25T00:58:54.482798Z| hsbt| * test/fileutils/test_fileutils.rb (test_chown_R): Add tests for   chown_R. [Feature #9383][ruby-core:59641]
+46091| 2014-05-25T00:58:52.304274Z| hsbt| * test/fileutils/test_fileutils.rb: Added recursively chmod tests.   [Feature #9303][ruby-core:59325]
+46090| 2014-05-25T00:43:14.911753Z| zzak| * class.c: [DOC] Fixed grammar and examples of instance_methods.   By @alex-frost via documenting-ruby/ruby#31 [ci skip] 
+46089| 2014-05-25T00:41:18.594477Z| akr| * test/lib/minitest/unit.rb: Show leakes threads and tempfiles. 
+46088| 2014-05-25T00:07:22.869471Z| svn| * properties.
+46087| 2014-05-25T00:07:19.934697Z| hsbt| * test/openssl/test_partial_record_read.rb: Testing read_nonblock on   a partial TLS record results in IO::WaitReadable by @mohamedhafez.   [fix GH-547]
+46086| 2014-05-24T23:54:17.627571Z| hsbt| * lib/logger.rb: refactored to include Logger::Period.

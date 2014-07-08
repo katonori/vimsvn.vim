@@ -1,0 +1,187 @@
+46085| 2014-05-24T21:52:31.910393Z| zzak| * vm_eval.c: [DOC] [ci skip] Improve instance_eval description when given a   block or String arguments. By @nathanl via documenting-ruby/ruby#28 
+46084| 2014-05-24T21:30:53.894060Z| svn| * 2014-05-25
+46083| 2014-05-24T21:30:42.889105Z| zzak| * array.c: [DOC] Clarify default argument for Array.new.   By @Elffers [Fixes GH-610] [ci skip] 
+46082| 2014-05-24T14:04:40.462097Z| nobu| internal.h: remove duplicate declaration  * internal.h (rb_vm_bugreport): remove declaration duplicate to   `vm_core.h`.
+46081| 2014-05-24T13:40:28.747618Z| hsbt| * array.c: [DOC] Add more documents to shuffle! and shuffle.   Contributed by @JuanitoFatas [ci skip][fix GH-612]
+46080| 2014-05-24T13:29:40.069015Z| hsbt| * test/lib/minitest/.document: removed unused configuration. [ci skip]
+46079| 2014-05-24T11:12:10.304053Z| akr| test_udp_server don't test IPv6 link-local addresses. 
+46078| 2014-05-24T10:20:41.201724Z| akr| * test/lib/minitest/spec.rb: Unused file removed.  * test/lib/minitest/autorun.rb: Don't require minitest/spec.  * test/lib/minitest/benchmark.rb: Ditto.  
+46077| 2014-05-24T09:46:02.020995Z| akr| * test/benchmark/test_benchmark.rb: Use test/unit. 
+46076| 2014-05-24T08:14:20.227257Z| nobu| prime.rb: fix a grammo  * lib/prime.rb (prime?): [DOC] fix a grammo, a missing article.
+46075| 2014-05-24T07:22:54.380884Z| normal| process.c (proc_getgroups, proc_setgroups): use ALLOCV_N  * process.c (proc_getgroups, proc_setgroups): use ALLOCV_N   [Bug #9856]
+46074| 2014-05-24T07:09:29.452791Z| akr| * test/lib/minitest/unit.rb (parallelize_me!): Removed.   This fixes the line-by-line structure of the test result in verbose   mode.  [ruby-core:54905]  * test/lib/minitest/parallel_each.rb: Removed.  * test/minitest/test_minitest_mock.rb: Don't call parallelize_me!.  * test/minitest/test_minitest_spec.rb: Ditto.  * test/minitest/test_minitest_unit.rb: Ditto.   Tests for parallel feature removed.  
+46073| 2014-05-24T06:29:23.194976Z| akr| * test/lib/minitest/hell.rb: Unused file removed.  * test/lib/minitest/pride.rb: Ditto.  
+46072| 2014-05-24T06:20:34.878889Z| nobu| gc.c: fix typo  * gc.c (objspace_malloc_increase): fix typo.   "increase" not "incraese".
+46071| 2014-05-24T06:05:35.165107Z| nobu| enumerator.c: adjust style [ci skip]  * enumerator.c (yielder_yield_push): Insert a break after the   method return value.  [fix GH-617]
+46070| 2014-05-24T06:01:51.580262Z| akr| * test/lib/minitest: Remove comments not appropriate now.  * test/minitest: Ditto.  
+46069| 2014-05-24T05:04:25.682071Z| hsbt| * NEWS: added minitest changes. [ci skip]
+46068| 2014-05-24T05:04:14.940221Z| hsbt| * NEWS: style [ci skip]
+46067| 2014-05-24T05:04:08.719121Z| hsbt| * test/lib/test/unit/test-unit.gemspec: removed needless gemspec file.
+46066| 2014-05-24T03:52:21.812460Z| kazu| fix a typo [ci skip]
+46065| 2014-05-24T00:40:53.850785Z| hsbt| * defs/default_gems: remvoed mintiest entry.
+46064| 2014-05-23T21:26:34.529855Z| ryan| lib/minitest removed.  Need to support proper gem packaging / installation before minitest 5 can be added. 
+46063| 2014-05-23T20:54:40.272642Z| akr| * ext/socket/mkconstants.rb: More constants 
+46062| 2014-05-23T15:32:23.102978Z| svn| * 2014-05-24
+46061| 2014-05-23T15:32:19.959712Z| ayumin| add information of incompatibility about Prime.prime? [Bug #7395]
+46060| 2014-05-23T12:36:30.561401Z| nobu| net/protocol.rb: fix SMTP dot stuffing  * net/protocol.rb (using_each_crlf_line): fix SMTP dot-stuffing   for messages not ending with a new-line.   [ruby-core:61441] [Bug #9627] [fix GH-616]
+46059| 2014-05-23T12:31:58.830970Z| nobu| test_file.rb: fix ctime on Windows  * test/ruby/test_file.rb (test_stat): `ctime` on Windows is not   last changed time.
+46058| 2014-05-23T10:34:13.826560Z| nobu| test_file.rb: estimate birthtime  * test/ruby/test_file.rb (test_stat): estimate expected birthtime   by pinching.
+46057| 2014-05-23T04:44:15.156241Z| nobu| enc/unicode.c: lookup functions  * enc/unicode.c (onigenc_unicode_{fold,unfold{1,2,3}}_lookup):   abstract lookup functions.
+46056| 2014-05-23T04:37:02.534009Z| nobu| enc/unicode.c: constify  * enc/unicode.c (code{2,3}_{cmp,hash}): constify and adjust   argument types.  * enc/unicode.c (onigenc_unicode_fold_lookup): constify.  * enc/unicode.c (onigenc_unicode_apply_all_case_fold): ditto.
+46055| 2014-05-22T20:17:48.532229Z| normal| gc.c (rb_free_m_tbl): mark function as static  * gc.c (rb_free_m_tbl): mark function as static * method.h (rb_free_m_tbl): remove prototype
+46053| 2014-05-22T15:09:15.120574Z| svn| * 2014-05-23
+46052| 2014-05-22T15:09:11.392394Z| nobu| Makefile.in: suppress warnings  * Makefile.in (enc/jis/props.h): suppress `pointer-to-int-cast`   warnings by using `offsetof`.
+46051| 2014-05-22T14:34:58.326442Z| nobu| jis/props.kwd: constify  * enc/jis/props.kwd (PropertyList): constify table itself.
+46050| 2014-05-22T14:34:56.986558Z| nobu| extmk.rb: non-installed extensions when statick-linked-ext  * ext/extmk.rb: exclude extension libraries not to be installed if   `--with-statick-linked-ext` is set, not only shared library is   not built.
+46049| 2014-05-22T14:34:54.267525Z| nobu| file.c: birthtime on Windows  * file.c (stat_birthtime): `ctime` is actually `created time` on Windows.
+46048| 2014-05-22T14:08:17.282892Z| akr| * ext/socket/mkconstants.rb: More TCP option constants.   Describe Linux and glibc versions.  
+46047| 2014-05-22T11:49:22.456118Z| naruse| * file.c (stat_birthtime): add birthtime support [Feature #9647]  * file.c (rb_stat_birthtime): add File::Stat.birthtime  * file.c (rb_file_s_birthtime): add File.birthtime  * file.c (rb_file_birthtime): add File#birthtime  * configure.in: check struct stat.st_birthtimespec.
+46046| 2014-05-22T11:17:34.571389Z| naruse| sys/param.h is used by linux
+46045| 2014-05-22T10:58:11.138628Z| svn| * properties.
+46044| 2014-05-22T10:58:08.936492Z| nobu| remove trailing spaces
+46043| 2014-05-22T10:42:06.041429Z| naruse| I suspect such early wakeup is because of automatic time correction
+46042| 2014-05-22T10:39:48.338483Z| naruse| revert File::Statfs [Feature #9772]
+46041| 2014-05-22T10:39:29.334361Z| naruse| add Bug::File::Fs.fsname for tests  get filesystem type name for given path
+46040| 2014-05-22T05:02:26.574863Z| svn| * 2014-05-22
+46039| 2014-05-22T05:02:15.832176Z| nobu| constify character property tables  * enc/jis/props.kwd: constify character property tables of JIS   based encodings by perfect hash. * enc/euc_jp.c, enc/shift_jis.c: use character property functions.
+46038| 2014-05-21T11:36:15.103662Z| kazu| fix a typo [ci skip]
+46037| 2014-05-21T06:11:25.905844Z| nobu| vm.c: rewind cfp  * vm.c (m_core_hash_{from_ary,merge_{ary,ptr,kwd}}): rewind cfp to   show proper backtrace.  [ruby-dev:35820] [Bug #416]
+46036| 2014-05-21T06:11:22.763351Z| nobu| test_backtrace.rb: r18554 tests  * test/ruby/test_backtrace.rb (test_core_backtrace_{alias,undef}):   add tests for r18554.  [ruby-dev:35820] [Bug #416]
+46035| 2014-05-21T04:46:00.177951Z| nobu| extmk.rb: non-installed extensions cannot link statically  * ext/extmk.rb: exclude extension libraries not to be installed   unless shared library is built, as they cannot be linked   statically.
+46034| 2014-05-21T03:22:18.756773Z| akr| * ext/socket/option.c: Fix complation error on Android.   Bionic doesn't define TCP state constants.  
+46033| 2014-05-21T02:42:43.955347Z| svn| * 2014-05-21
+46032| 2014-05-21T02:42:33.324504Z| nobu| configure.in: Info.plist workaround  * configure.in: workaround for Info.plist to get rid of `dsymutil`   crash by wrong files in parent directories.   [ruby-core:62594] [Bug #9840]
+46031| 2014-05-20T12:02:03.335049Z| hsbt| * test/ruby/test_dir.rb: added testcase of double slash path.
+46030| 2014-05-20T08:28:33.918185Z| nobu| id.def: predefine to_i  * defs/id.def: predefine `to_i` as well as `to_int`.  * numeric.c (id_to_i): use predefined `idTo_i`.  * object.c (conv_method_names): add `to_i` ID.
+46029| 2014-05-20T08:28:31.842608Z| nobu| use predefined IDs  * array.c (rb_ary_equal), hash.c (hash_equal): use predefined IDs,   `to_ary` and `to_hash` respectively.
+46028| 2014-05-20T06:41:06.562255Z| naruse| more insrease timeout of test_LSHIFT_neary_long_max  http://chkbuild002.hsbt.org/chkbuild/ruby-trunk/log/20140520T060016Z.fail.html.gz
+46027| 2014-05-20T06:39:08.222346Z| naruse| show progress of rdoc parsing to prevent timeout on chkbuild  http://c64b.rubyci.org/~chkbuild/ruby-trunk/log/20140520T030303Z.fail.html.gz
+46026| 2014-05-20T06:28:52.872831Z| nobu| id.def: predefine conversion method IDs  * defs/id.def: predefine conversion method name IDs.  * object.c (conv_method_names): consitify with predefined IDs.
+46025| 2014-05-19T20:00:14.105141Z| svn| * 2014-05-20
+46024| 2014-05-19T20:00:00.858060Z| akr| * ext/socket/extconf.rb: Don't check fields of struct tcp_info if the   structure is not available. 
+46022| 2014-05-19T14:28:26.593176Z| akr| * ext/socket/option.c (inspect_tcp_info): Permit longer data.  (glibc   2.7 adds tcpi_rcv_rtt, tcpi_rcv_space and tcpi_total_retrans to   struct tcp_info.)  
+46021| 2014-05-19T12:35:43.084149Z| kazu| fix typos [ci skip]
+46020| 2014-05-19T12:35:22.653851Z| nobu| etc.c: fix typo  * ext/etc/etc.c (etc_uname): fix typo, `len` with `plen`, and an   extra semicolon.
+46019| 2014-05-19T12:32:25.451628Z| nobu| etc.c: old VC  * ext/etc/etc.c (etc_uname): fix for old VC.
+46018| 2014-05-19T12:32:14.234179Z| nobu| etc.c: fix parameter  * ext/etc/etc.c (etc_uname): call with same first parameters.
+46017| 2014-05-19T11:52:03.278474Z| akr| * ext/socket/option.c (inspect_tcp_info): New function to inspect struct tcp_info.   (sockopt_inspect): Use inspect_tcp_info.  * ext/socket/extconf.rb: Check tcp_info related things.  * ext/socket/rubysocket.h: Include netinet/tcp_fsm.h if available.  
+46016| 2014-05-19T11:40:48.736673Z| akr| ignore constdefs.h. 
+46015| 2014-05-19T10:37:14.099332Z| akr| * test/dbm/test_dbm.rb: Use Etc.uname.  * test/gdbm/test_gdbm.rb: Ditto.  
+46014| 2014-05-19T07:54:25.387713Z| nobu| etc.c: Etc.uname on Windows  * ext/etc/etc.c (etc_uname): add support for Windows using   GetVersionExW(), GetSystemInfo(), and GetComputerNameExW() with   `ComputerNameDnsHostname`.  [Feature #9842]
+46013| 2014-05-19T07:29:51.378459Z| nobu| string.c: byte offset  * string.c (rb_pat_search): advance by byte offset but not by char   offset.  [ruby-core:62669] [Bug #9849]
+46012| 2014-05-19T07:06:54.279156Z| nobu| string.c: constify  * string.c (rb_str_index): constify local pointer variables.
+46011| 2014-05-19T05:07:15.526870Z| sorah| * bin/testrb: Removed. Forgot to remove in r45971.   [Feature #9711] [ruby-core:62620]
+46010| 2014-05-18T23:49:03.577764Z| nobu| envutil.rb: fix argument  * test/ruby/envutil.rb (assert_separately): fix missing `message`   argument to FailDesc.
+46009| 2014-05-18T23:35:04.603588Z| nobu| test_etc.rb: omit unrunnable tests  * test/etc/test_etc.rb (test_sysconf, test_confstr, test_pathconf):   define test cases only if corresponding constants are available.
+46008| 2014-05-18T20:05:35.312349Z| svn| * 2014-05-19
+46007| 2014-05-18T20:05:26.595574Z| naruse| increase wait  http://chkbuild002.hsbt.org/chkbuild/ruby-trunk/log/20140518T160015Z.fail.html.gz
+46004| 2014-05-18T13:20:39.648586Z| nobu| win32.c: fix infinite recursion  * win32/win32.c: include "missing/nextafter.c" and address   finite() and isnan() macros, to get rid of infinite recursion.
+46003| 2014-05-18T11:02:43.332168Z| naruse| fix type  struct RVALUE.file is const char*. struct RVALUE.line is int.
+46002| 2014-05-18T08:47:41.722857Z| nobu| eval_error.c: investigate core dump  * eval_error.c (error_handle): show backtrace at SIGSEGV, to   investigate core dump in CI.
+46001| 2014-05-18T08:45:37.088982Z| akr| Use Etc.uname instead of uname command invocation. 
+46000| 2014-05-18T08:45:07.465600Z| akr| [DOC] 
+45999| 2014-05-18T08:33:39.420795Z| akr| Fix a constant reference. 
+45998| 2014-05-18T08:31:34.877507Z| nobu| configure.in: rb_cv_atan2_inf_c99  * configure.in (rb_cv_atan2_inf_c99): set `no` if atan2f and   atan2l are not available, and quote the result.
+45997| 2014-05-18T08:15:16.452769Z| nobu| signal.c: use mcontext_t  * signal.c (check_stack_overflow): use mcontext_t.  the struct tag   name is not portable.
+45996| 2014-05-18T07:43:45.486807Z| akr| * test/ruby/test_m17n_comb.rb (test_str_crypt): Use Etc.confstr to   detect the glibc version.   libc.so is not an executable on Debian GNU/kFreeBSD 7.0 (wheezy).  
+45995| 2014-05-18T07:38:54.908359Z| nobu| signal.c: check stack overflow by SP  * signal.c (check_stack_overflow): raise SystemStackError if SP   register and fault address is in the same page or the next, on   x86 Mac OS X.  [EXPERIMENTAL]
+45994| 2014-05-18T06:35:04.376047Z| naruse| increase timeout 10 to 15 on test_LSHIFT_neary_long_max  http://chkbuild002.hsbt.org/chkbuild/ruby-trunk/log/20140517T160021Z.fail.html.gz http://chkbuild002.hsbt.org/chkbuild/ruby-trunk/log/20140517T200036Z.fail.html.gz
+45993| 2014-05-18T06:08:54.505611Z| nobu| extmk.rb: discard empty Makefile  * ext/extmk.rb (extmake): discard empty Makefile which can be left   accidentally.
+45992| 2014-05-18T05:46:36.134331Z| nobu| Makefile.sub: fix nextafter  * win32/Makefile.sub (MISSING, CONFIG_H): msvcr120.dll provides   nextafter() as well as other mathematic functions.  finite() and   isnan() used in missing/nextafter.c are not by older runtimes.   [Feature #9834]
+45991| 2014-05-18T03:15:57.692451Z| nobu| io.c: update ARGF examples  * io.c (argf_each_line, argf_inplace_mode_set): [DOC] Update ARGF   documentation examples.  `ARGF.lines` has been deprecated in   favor of `ARGF.each_line`.  [Fixes GH-615]
+45990| 2014-05-18T03:15:34.192460Z| nobu| enum.c: suppress warnings  * enum.c (sliceafter_ii): suppress unused-value warnings.
+45989| 2014-05-18T03:04:52.844855Z| naruse| output more verbose to debug  following failure insists unexpected condition http://c5664.rubyci.org/~chkbuild/ruby-trunk/log/20140515T133301Z.diff.html.gz
+45988| 2014-05-18T03:04:07.385669Z| akr| Fix a dependency for etc.o. 
+45987| 2014-05-18T03:03:26.070621Z| akr| * missing/nextafter.c: Include ruby/missing.h. 
+45986| 2014-05-18T02:10:01.077801Z| akr| * win32/Makefile.sub: Add nextafter.obj to MISSING. 
+45985| 2014-05-18T02:06:15.330761Z| akr| [DOC] 
+45984| 2014-05-18T01:48:47.387327Z| akr| * ext/etc/etc.c: Etc.sysconf, Etc.confstr and IO#pathconf implemented.  * ext/etc/extconf.rb: Check sysconf(), confstr() and fpathconf().  * ext/etc/mkconstants.rb: New file.   [ruby-core:62600] [Feature #9842]  
+45983| 2014-05-18T00:58:34.620730Z| akr| * ext/etc/etc.c: Etc.uname method implemented.  * ext/etc/extconf.rb: Check uname() function.    [ruby-core:62139] [Feature #9770]  
+45982| 2014-05-18T00:37:10.127158Z| akr| * configure.in: Check nextafter() availability.  * include/ruby/missing.h (nextafter): New optional declaration.  * missing/nextafter.c: New file.  * numeric.c: Float#next_float and Float#prev_float implemented.     [ruby-core:62562] [Feature #9834]  
+45981| 2014-05-18T00:06:05.728724Z| akr| * enum.c: Enumerable#slice_after implemented.  * enumerator.c: Enumerator::Lazy#slice_after implemented.    Requested by Tsuyoshi Sawada.  [ruby-core:58123] [Feature #9071]  
+45980| 2014-05-17T23:23:37.989062Z| nobu| mkmf.rb: add NULLCMD  * lib/mkmf.rb (configuration): add NULLCMD.  * lib/mkmf.rb (create_makefile): use NULLCMD macro.
+45979| 2014-05-17T23:22:28.538479Z| nobu| io.c: buffer must be modifiable  * io.c (io_setstrbuf): always check if the buffer is modifiable.   [ruby-core:62643] [Bug #9847]
+45978| 2014-05-17T16:38:17.557889Z| akr| Remove empty directory. 
+45977| 2014-05-17T16:37:48.268841Z| svn| * 2014-05-18
+45976| 2014-05-17T16:37:41.712582Z| akr| * include/ruby/ruby.h: Hide Rational internal.   (RRational): Moved to internal.h   (RRATIONAL): Ditto.   (RRATIONAL_SET_NUM): Moved to rational.c.   (RRATIONAL_SET_DEN): Ditto.  * rational.c (rb_rational_num): New function.   (rb_rational_den): Ditto.  * include/ruby/intern.h (rb_rational_num): Declared.   (rb_rational_den): Ditto.  *  ext/bigdecimal/bigdecimal.c: Follow the above change.  * ext/date/date_core.c: Ditto.    [ruby-core:60665] [Feature #9513]  
+45975| 2014-05-17T08:05:35.137187Z| sorah| * NEWS: Add news about removal of lib/test/**/*.rb.
+45974| 2014-05-17T08:01:15.934561Z| sorah| * lib/test: Removed because ruby's test cases now independent to   lib/test by r45970. [Feature #9711] [ruby-core:62620]    I'm still considering about the future of lib/minitest, lib/test.   (bundling gems?)
+45973| 2014-05-17T07:48:25.183094Z| nobu| configure.in: disable install-capi by default  * configure.in (install-capi): do not install C API documents by   default.  [ruby-core:62557]
+45972| 2014-05-17T07:46:05.997092Z| nobu| Doxyfile.tmpl: exclude ccan  * template/Doxyfile.tmpl (EXCLUDE): exclude ccan.  [ruby-core:62557]
+45971| 2014-05-17T06:27:04.218126Z| svn| * properties.
+45970| 2014-05-17T06:26:51.120665Z| hsbt| * test/runner.rb: remove dependency test-unit and minitest   from stdlib when running with test-all.   [Feature #9711][ruby-core:61890] * test/testunit/*.rb: ditto. * test/lib: ditto.
+45969| 2014-05-17T02:02:51.064553Z| nobu| dir.c: try match PLAIN  * dir.c (glob_helper): try match PLAIN as well as ALPHA, which are   separated by previous commits.  [ruby-core:61552] [Bug #9648]
+45968| 2014-05-17T01:40:34.430962Z| nobu| dir.c: set PLAIN for non-magical  * dir.c (glob_make_pattern): set PLAIN for non-magical path to   skip parts which not need to glob.   [ruby-core:61552] [Bug #9648]
+45967| 2014-05-17T01:05:06.384588Z| nobu| dir.c: fix conditions for ALPHA  * dir.c (has_magic): return ALPHA at alphabetical name regardless   FNM_CASEFOLD flag. * dir.c (glob_helper): fix conditions for ALPHA.   [ruby-core:61552] [Bug #9648]
+45966| 2014-05-16T16:49:38.199042Z| nobu| dir.c: reduce matching  * dir.c (glob_helper): reduce matching at non-mgaical path on   Windows.
+45965| 2014-05-16T16:49:25.748537Z| nobu| dir.c: match plain names as-is  * dir.c (glob_pattern_type): separate names with alphabet but no   magical from plain. * dir.c (glob_helper): match plain names as-is to treat super-root   same as the root.  [ruby-core:61552] [Bug #9648]
+45964| 2014-05-16T15:36:00.920487Z| svn| * 2014-05-17
+45963| 2014-05-16T15:35:50.638198Z| usa| * tool/release.sh: need -f option because this overwrite the previous links if they exist. 
+45961| 2014-05-16T09:18:51.137532Z| kazu| fix typos [ci skip]
+45960| 2014-05-16T08:41:06.152369Z| ko1| * gc.c (gc_marks, gc_marks_body): increase the counter of young objects   at the major GC because AGE2Promotion changes all old objects into   young objects at major GC.  
+45959| 2014-05-16T08:38:04.450132Z| ko1| * gc.c (gc_before_sweep): heap_pages_swept_slots should contains   heap_pages_increment.   For example, GC by exceeding malloc_limit can remain   heap_pages_increment.  
+45958| 2014-05-16T08:22:53.046025Z| svn| * 2014-05-16
+45957| 2014-05-16T08:22:41.444071Z| nobu| dir.c: check boundary  * dir.c (glob_make_pattern): check boundary before accessing.
+45954| 2014-05-15T12:31:36.976865Z| shirosaki| configure.in: enable SSE2 on mingw  * configure.in: enable SSE2 on mingw. target='i386-pc-mingw32'.   [ruby-core:62095] [Bug #8358]
+45953| 2014-05-15T12:31:26.140568Z| shirosaki| parallel.rb: fix test-all parallel failure  * lib/test/unit/parallel.rb: fix test-all parallel failure if a test   is skipped after raise.   DL::TestFunc#test_sinf is skipped after raise on mingw ruby.   But it causes Mashal.load failure due to undefined class/module   DL::DLError when doing test-all parallel and test-all doesn't   complete. We create new MiniTest::Skip object to avoid Mashal.load   failure.   [ruby-core:62133] [Bug #9767]  * test/testunit/test_parallel.rb (TestParallel): add a test.  * test/testunit/tests_for_parallel/ptest_forth.rb: ditto.
+45952| 2014-05-15T10:53:40.317740Z| nobu| * gc.c (heap_extend_pages): fix indent.
+45951| 2014-05-15T10:34:57.234126Z| kazu| fix typos [ci skip]
+45950| 2014-05-15T09:58:21.170442Z| ko1| * gc.c (garbage_collect_body): move gc_heap_prepare_minimum_pages()   from gc_sweep().  
+45949| 2014-05-15T09:54:49.849389Z| ko1| * gc.c (heap_extend_pages): calculate next growing heap size. * gc.c (heap_set_increment): accept addition pages instead of   minimum pages. * gc.c (gc_after_sweep): use heap_etend_pages(). * gc.c (gc_heap_prepare_minimum_pages): add only 1 page. * gc.c (heap_ready_to_gc): add only 1 page.  
+45948| 2014-05-15T09:43:18.850837Z| ko1| * gc.c: introduce macros to remove magic number.   GC_HEAP_FREE_SLOTS_MIN_RATIO = 0.3: guarantee minimum empty slots                                       ratio after sweep.   GC_HEAP_FREE_SLOTS_MAX_RATIO = 0.8: allow to free pages 0.2 (= 1-0.8)                                       of current existing slots.  
+45947| 2014-05-15T08:32:55.113545Z| nobu| Handle machine stack overflow on mingw  * thread_win32.c (rb_w32_stack_overflow_handler): use Structured   Exception Handling by Addvectoredexceptionhandler() for machine   stack overflow on mingw.   This would be equivalent to the handling using __try and __exept   on mswin introduced by r43748.
+45946| 2014-05-15T06:39:52.634300Z| svn| * 2014-05-15
+45945| 2014-05-15T06:39:43.894134Z| nobu| openssl/depend: ossl.o  * ext/openssl/depend (ossl.o): now depends on thread_native.h   under $(hdrdir) instead of $(top_srcdir).  [Feature #9612]
+45944| 2014-05-14T10:55:38.423722Z| ko1| * ext/openssl/depend: remove dependency from internal headers.   [Feature #9612] * ext/openssl/ossl.c (ossl_fips_mode_set): ditto. * ext/coverage/depend: ditto. * include/ruby/thread_native.h: added.   This header file only provides wrapper functions to control   native threads. These wrapper functions are used by MRI   implementation. * vm_core.h: use include/ruby/thread_native.h. * thread.c: ditto. * thread_pthread.h: ditto. * thread_win32.h: ditto. * thread_native.h: removed.  
+45943| 2014-05-14T09:04:27.639995Z| ko1| * gc.c: enable RGENGC_AGE2_PROMOTION.  
+45942| 2014-05-14T09:03:17.934136Z| ko1| * gc.c (rgengc_rememberset_mark): promote remembered object earlier.  
+45940| 2014-05-14T02:07:32.223687Z| hsbt| * LEGAL: added license infomation of ccan files.
+45939| 2014-05-13T15:47:38.543811Z| svn| * 2014-05-14
+45938| 2014-05-13T15:47:36.860594Z| nobu| make-snapshot: -digests option  * tool/make-snapshot (package): add -digests option to select   digest algorithms to be shown.
+45937| 2014-05-13T15:47:33.417860Z| nobu| make-snapshot: -package option  * tool/make-snapshot (package): add -package option to select   packages to be made.
+45936| 2014-05-13T15:47:31.233841Z| nobu| make-snapshot: unused variables  * tool/make-snapshot (package): remove variables no longer used.
+45935| 2014-05-13T10:09:43.564813Z| nobu| make-snapshot: SHA512  * tool/make-snapshot (package): add SHA512.
+45934| 2014-05-13T10:09:41.975907Z| nobu| make-snapshot: support xz  * tool/make-snapshot (package): support xz.  no longer runs with   1.8 or earlier.
+45933| 2014-05-13T10:05:43.468952Z| akr| set svn:ignore property. 
+45932| 2014-05-12T15:15:46.098136Z| svn| * 2014-05-13
+45931| 2014-05-12T15:15:43.298053Z| nagachika| * ChangeLog: fix a typo for r45930.
+45930| 2014-05-12T14:57:17.614451Z| nobu| configure.in: check atan2  * configure.in (rb_cv_atan2_inf_c99): check whether runtime atan2   handles Inf as C99.  ruby-core:62536] [Bug #9831]
+45926| 2014-05-12T11:33:39.942304Z| akr| * configure.in: Invoke AC_REPLACE_FUNCS for each function. 
+45925| 2014-05-12T10:57:11.724028Z| ko1| * gc.c: count young object correctly and show it in GC.stat   on RGENGC_AGE2_PROMOTION. * gc.c (RVALUE_PROMOTE_YOUNG): decrement young object count on   YOUNG->OLD. * gc.c (obj_free): decrement young object count when young object   freed. * gc.c (gc_marks): should not clear young object count. * gc.c (gc_stat_internal): GC.stat :young_object information.  
+45924| 2014-05-12T01:35:09.332283Z| nobu| signal.c: check the next page too  * signal.c (check_stack_overflow): check the next page too.  SP in   ucontext is not decremented yet when `push` failed, so the fault   page can be the next.
+45923| 2014-05-11T16:31:57.088878Z| svn| * 2014-05-12
+45922| 2014-05-11T16:31:51.430046Z| akr| * ext/socket/ifaddr.c (IS_IFADDRS): Unused macro removed.  * ext/strscan/strscan.c (BUFSIZE): Ditto.  * ext/zlib/zlib.c (OBJ_IS_FREED): Ditto.  
+45921| 2014-05-11T13:29:16.350476Z| akr| * compile.c (BUFSIZE): Unused macro removed.  * vm.c (BUFSIZE): Ditto.  * pack.c (INT64toNUM): Ditto.   (UINT64toNUM): Ditto.   (BYTEWIDTH): Ditto.  * time.c (lshift): Ditto.   (UINT64toNUM): Ditto.   (id_lshift): Unused variable removed.  
+45920| 2014-05-11T12:24:11.069095Z| akr| * pack.c (swaps): Unused macro removed.   (swapi): Ditto.   (swapl): Ditto.   (swapll): Ditto.  
+45919| 2014-05-11T10:40:18.241833Z| nobu| test_process.rb: duplicate assertions  * test/ruby/test_process.rb (test_status_{kill,quit}): remove   duplicate assertions
+45918| 2014-05-11T03:19:29.561134Z| nobu| test_process.rb: WIFEXITED and so on are system dependent  * test/ruby/test_process.rb (test_status_kill): WIFEXITED and so   on are available only if signal is supported by the system.   [ruby-dev:48203] [Bug #9820]
+45917| 2014-05-11T01:02:47.201168Z| nobu| signal.c: directly deliver non-handlable signals  * signal.c (rb_f_kill): directly deliver signals which cannot be   handled, i.e., SIGKILL and SIGSTOP.
+45916| 2014-05-11T00:33:45.485397Z| nobu| configure.in: check typeof  * configure.in (rb_cv_typeof): check typeof extension for ccan   headers.
+45915| 2014-05-11T00:25:36.174878Z| nobu| vm.c: suppress a warning  * vm.c (rb_vm_living_threads_foreach): suppress "uninitialized"   warning where "typeof" is unavailable.
+45914| 2014-05-10T23:49:06.668097Z| svn| * properties.
+45913| 2014-05-10T23:48:51.038551Z| normal| vm*: doubly-linked list from ccan to manage vm->living_threads  A doubly-linked list for tracking living threads guarantees constant-time insert/delete performance with no corner cases of a hash table.  I chose this ccan implementation of doubly-linked lists over the BSD sys/queue.h implementation since:  1) insertion and removal are both branchless 2) locality is improved if a struct may be a member of multiple lists    (0002 patch in Feature 9632 will introduce a secondary list    for waiting FDs)  This also increases cache locality during iteration: improving performance in a new IO#close benchmark with many sleeping threads while still scanning the same number of threads.  	vm_thread_close 1.762  * vm_core.h (rb_vm_t): list_head and counter for living_threads   (rb_thread_t): vmlt_node for living_threads linkage   (rb_vm_living_threads_init): new function wrapper   (rb_vm_living_threads_insert): ditto   (rb_vm_living_threads_remove): ditto * vm.c (rb_vm_living_threads_foreach): new function wrapper * thread.c (terminate_i, thread_start_func_2, thread_create_core,   thread_fd_close_i, thread_fd_close): update to use new APIs * vm.c (vm_mark_each_thread_func, rb_vm_mark, ruby_vm_destruct,   vm_memsize, vm_init2, Init_VM): ditto * vm_trace.c (clear_trace_func_i, rb_clear_trace_func): ditto * benchmark/bm_vm_thread_close.rb: added to show improvement * ccan/build_assert/build_assert.h: added as a dependency of list.h * ccan/check_type/check_type.h: ditto * ccan/container_of/container_of.h: ditto * ccan/licenses/BSD-MIT: ditto * ccan/licenses/CC0: ditto * ccan/str/str.h: ditto (stripped of unused macros) * ccan/list/list.h: ditto * common.mk: add CCAN_LIST_INCLUDES   [ruby-core:61871][Feature 9632 (part 1)]  Apologies for the size of this commit, but I think a good doubly-linked list will be useful for future features, too. This may be used to add ordering to a container_of-based hash table to preserve compatibility if required (e.g. feature 9614).
+45912| 2014-05-10T16:10:45.043599Z| nobu| thread.c: always deliver signal immediately  * thread.c (ruby_kill): always deliver signal immediately, without   check for main thread.  no longer called in other context.   [ruby-dev:48203] [Bug #9820]
+45911| 2014-05-10T16:10:32.942056Z| nobu| signal.c: directly enqueue  * signal.c (rb_f_kill): directly enqueue an ignored signal to self,   except for SIGSEGV and SIGBUS.  [ruby-dev:48203] [Bug #9820]
+45910| 2014-05-10T15:52:56.442391Z| svn| * 2014-05-11
+45909| 2014-05-10T15:52:45.315071Z| nobu| thread_pthread.c: variable for errno  * thread_pthread.c (rb_thread_wakeup_timer_thread_fd): use a local   variable for errno.  * thread_pthread.c (consume_communication_pipe): ditto.  add   EWOULDBLOCK case.
+45907| 2014-05-10T14:48:58.083422Z| nobu| thread_pthread.c: timer_thread_pipe struct  * thread_pthread.c (timer_thread_pipe): aggregate timer thread   pipe stuff into a struct.
+45906| 2014-05-10T14:47:04.405757Z| nobu| thread_pthread.c: compare with pthread_equal  * thread_pthread.c (ubf_select): compare thread_id with   pthread_equal() but not directly.
+45904| 2014-05-10T13:37:58.186100Z| nobu| dir.c: match in UTF-8  * dir.c (push_glob): match in UTF-8 on Mac OS X.   [ruby-dev:48213] [Bug #9825]
+45903| 2014-05-10T12:15:19.670179Z| nobu| test_io_console.rb: show failure details  * test/io/console/test_io_console.rb (test_noctty): use   `assert_ruby_status` to show failure details.
+45902| 2014-05-10T12:15:09.208092Z| nobu| envutil.rb: rubybin: keyword  * test/ruby/envutil.rb (invoke_ruby): add rubybin: keyword option   to specify the command to run scripts.
+45901| 2014-05-10T12:15:06.566459Z| nobu| envutil.rb: successfully terminated process  * test/ruby/envutil.rb (FailDesc): allow successfully terminated   process without a signal.
+45900| 2014-05-10T04:41:02.865170Z| nobu| process.c: use ruby_stop  * process.c (rb_exit): call ruby_stop() which calls ruby_cleanup(),   instead of calling ruby_finalize() directly.
+45899| 2014-05-10T04:32:22.764207Z| nobu| thread.c: stop if forked in a sub-thread  * thread.c (thread_start_func_2): stop if forked in a sub-thread,   the thread has become the main thread.   [ruby-core:62070] [Bug #9751]
+45898| 2014-05-10T04:32:10.799230Z| nobu| thread_pthread.c: variable for errno  * thread_pthread.c (timer_thread_sleep): use a local variable for   errno.
+45897| 2014-05-10T01:00:37.273799Z| nobu| test_signal.rb: test iff SIGQUIT is supported  * test/ruby/test_signal.rb (test_trap_system_default): test only   if SIGQUIT is supported, which is platform dependent.
+45896| 2014-05-10T00:33:38.947725Z| hsbt| * man/ruby.1: remove deadlink. [ruby-core:62145][Bug #9773]
+45895| 2014-05-10T00:32:58.772426Z| nobu| test_thread.rb: run with default handler  * test/ruby/test_thread.rb (test_thread_timer_and_interrupt): run   with default handler.  * test/ruby/test_thread.rb (test_thread_{join,value}_in_trap):   ditto.
+45894| 2014-05-09T23:48:47.521866Z| akr| * signal.c (trap): Return "SYSTEM_DEFAULT" if SIG_DFL is set. 
+45893| 2014-05-09T16:15:30.250018Z| nobu| test_signal.rb: missing argv  * test/ruby/test_signal.rb (test_hup_me): add missing argv.
+45892| 2014-05-09T15:13:22.412665Z| svn| * 2014-05-10
+45891| 2014-05-09T15:13:11.309829Z| nobu| test_beginendblock.rb, test_signal.rb: run with default handler  * test/ruby/test_beginendblock.rb (test_propagate_signaled): run   with default handler.  * test/ruby/test_signal.rb (test_hup_me): ditto.
+45890| 2014-05-09T14:31:34.737811Z| nobu| thread_*.c: constify  * thread_{pthread,win32}.c (native_cond_timedwait): constify.
+45889| 2014-05-09T14:31:27.012902Z| nobu| signal.c: if to switch  * signal.c (ruby_signal): turn multiple `if` statements into a   `switch`.
+45888| 2014-05-09T13:57:04.425860Z| akr| [DOC] 
+45887| 2014-05-09T05:52:59.418133Z| nobu| extmk.rb: check if parent is build  * ext/extmk.rb (extmake): don't build nested libraries if parent   library isn't build.  * ext/{dl/callback,tk/tkutil}/extconf.rb: no longer need to check   if the parent is build.
+45886| 2014-05-09T05:52:57.004384Z| nobu| extmk.rb: fix extstatic  * ext/extmk.rb: fix variable name for --extstatic option.
