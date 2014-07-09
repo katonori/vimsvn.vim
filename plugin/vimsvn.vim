@@ -60,10 +60,10 @@ command! -nargs=0 SvnRevertFile :call <SID>SvnRevertFile()
 " functions for map settings
 "
 function! s:SetupMapChangeListView()
-    nnoremap <enter> :call <SID>SvnGetChange()<enter>
-    nnoremap <c-n> :call <SID>SvnGetLogNextRange()<enter>
-    nnoremap <c-p> :call <SID>SvnGetLogPrevRange()<enter>
-    nnoremap q :q<enter>
+    nnoremap <buffer> <enter> :call <SID>SvnGetChange()<enter>
+    nnoremap <buffer> <c-n> :call <SID>SvnGetLogNextRange()<enter>
+    nnoremap <buffer> <c-p> :call <SID>SvnGetLogPrevRange()<enter>
+    nnoremap <buffer> q :q<enter>
     syntax match revisionNum '^[0-9]\+'
     syntax match dateNum ' [0-9\-T:\.]\+Z'
     highlight link revisionNum Number
@@ -71,8 +71,8 @@ function! s:SetupMapChangeListView()
 endfunction
 
 function! s:SetupMapChangeSummaryView()
-    :nnoremap <enter> :call <SID>SvnGetFileDiff()<enter>
-    let l:cmd = ':nnoremap q :b ' . s:changeListFile. '<enter>'
+    nnoremap <buffer> <enter> :call <SID>SvnGetFileDiff()<enter>
+    let l:cmd = ':nnoremap <buffer> q :b ' . s:changeListFile. '<enter>'
     execute l:cmd
     syntax match modeified '^M'
     syntax match added '^A'
@@ -83,8 +83,9 @@ function! s:SetupMapChangeSummaryView()
 endfunction
 
 function! s:SetupMapStatView()
-    :nnoremap <enter> :call <SID>SvnGetFileDiff()<enter>
-    let l:cmd = ':nnoremap q :q<enter>'
+    nnoremap <buffer> <enter> :call <SID>SvnGetFileDiff()<enter>
+    nnoremap <buffer> <space> :call <SID>SvnToggleCommit()<enter>
+    let l:cmd = ':nnoremap <buffer> q :q<enter>'
     execute l:cmd
     syntax match modeified '^M'
     syntax match added '^A'
