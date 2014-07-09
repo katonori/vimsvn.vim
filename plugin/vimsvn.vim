@@ -51,6 +51,10 @@ command! -nargs=0 SvnGetLogNextRange :call <SID>SvnGetLogNextRange()
 command! -nargs=0 SvnGetLogPrevRange :call <SID>SvnGetLogPrevRange()
 command! -nargs=0 SvnGetFileDiff :call <SID>SvnGetFileDiff()
 command! -nargs=0 SvnGetChange :call <SID>SvnGetChange()
+command! -nargs=0 SvnToggleCommit :call <SID>SvnToggleCommit()
+command! -nargs=0 SvnCommitMarkedItems :call <SID>SvnCommitMarkedItems()
+command! -nargs=0 SvnAddFile :call <SID>SvnAddFile()
+command! -nargs=0 SvnRevertFile :call <SID>SvnRevertFile()
 
 "
 " functions for map settings
@@ -401,7 +405,7 @@ endfunction
 "
 " add file to repository
 "
-function! SvnAddFile()
+function! s:SvnAddFile()
 python << EOF
 import vim
 import sys
@@ -424,7 +428,7 @@ def func():
         return
 
     svn.addFile(fileName)
-    vim.command(":call SvnGetStat()")
+    vim.command(":call s:SvnGetStat()")
 
 # run
 func()
@@ -435,7 +439,7 @@ endfunction
 "
 " revert file
 "
-function! SvnRevertFile()
+function! s:SvnRevertFile()
 python << EOF
 import vim
 import sys
@@ -458,7 +462,7 @@ def func():
         return
 
     svn.revertFile(fileName)
-    vim.command(":call SvnGetStat()")
+    vim.command(":call s:SvnGetStat()")
 
 # run
 func()
@@ -496,7 +500,35 @@ endfunction
 "
 " commit file
 "
-function! SvnEditCommitLog()
+function! s:SvnEditCommitLog()
+python << EOF
+import vim
+import sys
+import re
+# add script directory to search path
+sys.path.append(vim.eval("s:dirName"))
+import svnWrapper
+
+def func():
+    svn = svnWrapper.getInstance(vim.eval("s:logFile"))
+
+    vim.command(":new! " + vim.eval("s:commitMsg"))
+    vim.command("setlocal statusline=[commit\ message\ buffer]\ add\ message\ and\ close\ to\ check\ in.\ close\ buffer\ leaving\ empty\ to\ cancel:\ " + vim.eval("s:commitMsg"))
+    vim.command(":setlocal noro")
+    del vim.current.buffer[:]
+    vim.command(":w")
+    vim.command(":autocmd BufUnload <buffer> call s:SvnDoCommit()")
+
+# run
+func()
+
+EOF
+endfunction
+
+"
+" 
+"
+function! s:SvnToggleCommit()
 python << EOF
 import vim
 import sys
@@ -507,22 +539,99 @@ import svnWrapper
 
 def func():
     fileName = ''
+    mark = ''
     svn = svnWrapper.getInstance(vim.eval("s:logFile"))
 
     # get fileName
     (row, col) = vim.current.window.cursor
     line = vim.current.buffer[row-1]
-    m = re.match(r'^[AMD]\t\t(.*)$', line)
-    if m:
-        fileName = m.group(1)
+    m0 = re.match(r'(^[AMD])\t\t(.*)$', line)
+    m1 = re.match(r'(^[AMD])\t\*\t(.*)$', line)
+    if m0:
+        mark = m0.group(1)
+        fileName = m0.group(2)
+        # mark as to be committed
+        vim.command(":set noro")
+        vim.current.buffer[row-1] = mark + "\t*\t" + fileName
+        vim.command(":w")
+        vim.command(":set ro")
+    elif m1: # marked as to be committed
+        mark = m1.group(1)
+        fileName = m1.group(2)
+        # mark as to be committed
+        vim.command(":set noro")
+        vim.current.buffer[row-1] = mark + "\t\t" + fileName
+        vim.command(":w")
+        vim.command(":set ro")
     else:
         return
 
-    vim.command(":new! " + vim.eval("s:commitMsg"))
-    vim.command("setlocal statusline=[commit\ message\ buffer]\ add\ message\ and\ close\ to\ check\ in.\ close\ buffer\ leaving\ empty\ to\ cancel:\ " + vim.eval("s:commitMsg"))
-    del vim.current.buffer[:]
-    vim.command(":autocmd BufUnload <buffer> call SvnCommitFile(" + "'" + fileName + "')")
+# run
+func()
 
+EOF
+endfunction
+
+"
+" commit file
+"
+function! s:SvnCommitMarkedItems()
+python << EOF
+import vim
+import sys
+import re
+import os
+# add script directory to search path
+sys.path.append(vim.eval("s:dirName"))
+import svnWrapper
+
+def func():
+    fileList = []
+    svn = svnWrapper.getInstance(vim.eval("s:logFile"))
+
+    # make commit list
+    for l in vim.current.buffer:
+        m = re.match(r'^[AMD]\t\*\t(.*)$', l)
+        if m:
+            fileList.append(m.group(1))
+
+    if fileList != []:
+        vim.command(":new") 
+        vim.current.buffer[0] = "items to be committed"
+        vim.current.buffer.append("--")
+        for l in fileList:
+            vim.current.buffer.append(l)
+        vim.command(":set buftype=nofile") 
+        svn.setCommitList(fileList)
+
+        vim.command(":call s:SvnEditCommitLog()")
+# run
+func()
+
+EOF
+endfunction
+
+"
+" commit file
+"
+function! s:SvnDoCommit()
+python << EOF
+import vim
+import sys
+import re
+import os
+# add script directory to search path
+sys.path.append(vim.eval("s:dirName"))
+import svnWrapper
+
+def func():
+    commitMsgFile = vim.eval("s:commitMsg")
+    svn = svnWrapper.getInstance(vim.eval("s:logFile"))
+    if os.path.getsize(commitMsgFile) != 0:
+        svn.commitList(commitMsgFile)
+
+    vim.command(":wincmd c")
+    vim.command(":call s:SvnGetStat()")
 # run
 func()
 

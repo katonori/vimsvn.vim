@@ -42,6 +42,7 @@ class SvnWrapper:
     mLogStartRev = 0
     mLogFile = ''
     mPipe = ''
+    mCommitList = []
 
     """
     " get repository information
@@ -86,6 +87,9 @@ class SvnWrapper:
     def getGlobal(self):
         global gRelPathToRoot
         return gRelPathToRoot
+
+    def setCommitList(self, itemList):
+        self.mCommitList = itemList
 
     """
     " get summary of changes at a revision
@@ -145,8 +149,14 @@ class SvnWrapper:
         self.appendToLog(diffOut)
         return 
 
-    def commitFile(self, file, log):
-        cmd = 'svn ci --file %s %s'%(log, file)
+    """
+    " commit items stored in list
+    """
+    def commitList(self, log):
+        files = ""
+        for f in self.mCommitList:
+            files += ' "' + f + '"'
+        cmd = 'svn ci --file %s %s'%(log, files)
         self.appendToLog(cmd)
         diffOut = commands.getoutput(cmd)
         self.appendToLog(diffOut)
