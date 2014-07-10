@@ -158,9 +158,9 @@ class SvnWrapper:
             files += ' "' + f + '"'
         cmd = 'svn ci --file %s %s'%(log, files)
         self.appendToLog(cmd)
-        diffOut = commands.getoutput(cmd)
-        self.appendToLog(diffOut)
-        return 
+        (rv, out) = commands.getstatusoutput(cmd)
+        self.appendToLog(out)
+        return rv
 
     def getChangeList(self, endRev, num):
         endRev = int(endRev)
