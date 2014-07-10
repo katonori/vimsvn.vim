@@ -138,9 +138,8 @@ autocmd FileType SvnDiffView call <SID>SetupMapDiffView()
 "
 function! s:SvnGetLog()
 python << EOF
-import vim
-import sys
 # add script directory to search path
+import vim, sys
 sys.path.append(vim.eval("s:dirName"))
 import svnWrapper
 
@@ -173,9 +172,8 @@ endfunction
 "
 function! s:UpdateChangeList()
 python << EOF
-import vim
-import sys
 # add script directory to search path
+import vim, sys
 sys.path.append(vim.eval("s:dirName"))
 import svnWrapper
 
@@ -210,9 +208,8 @@ endfunction
 "
 function! s:SvnGetLogNextRange()
 python << EOF
-import vim
-import sys
 # add script directory to search path
+import vim, sys
 sys.path.append(vim.eval("s:dirName"))
 import svnWrapper
 
@@ -247,9 +244,8 @@ endfunction
 "
 function! s:SvnGetLogPrevRange()
 python << EOF
-import vim
-import sys
 # add script directory to search path
+import vim, sys
 sys.path.append(vim.eval("s:dirName"))
 import svnWrapper
 
@@ -284,10 +280,8 @@ endfunction
 function! s:SvnGetChange()
     let s:isDiffLocal = 0
 python << EOF
-import vim
-import sys
-import re
 # add script directory to search path
+import vim, sys, re
 sys.path.append(vim.eval("s:dirName"))
 import svnWrapper
 
@@ -329,10 +323,8 @@ endfunction
 "
 function! s:SvnGetFileDiff()
 python << EOF
-import vim
-import sys
-import re
 # add script directory to search path
+import vim, sys, re
 sys.path.append(vim.eval("s:dirName"))
 import svnWrapper
 
@@ -408,10 +400,8 @@ endfunction
 "
 function! s:SvnAddFile()
 python << EOF
-import vim
-import sys
-import re
 # add script directory to search path
+import vim, sys, re
 sys.path.append(vim.eval("s:dirName"))
 import svnWrapper
 
@@ -442,10 +432,8 @@ endfunction
 "
 function! s:SvnRevertFile()
 python << EOF
-import vim
-import sys
-import re
 # add script directory to search path
+import vim, sys, re
 sys.path.append(vim.eval("s:dirName"))
 import svnWrapper
 
@@ -476,10 +464,8 @@ endfunction
 "
 function! s:SvnToggleCommit()
 python << EOF
-import vim
-import sys
-import re
 # add script directory to search path
+import vim, sys, re
 sys.path.append(vim.eval("s:dirName"))
 import svnWrapper
 
@@ -523,11 +509,8 @@ endfunction
 "
 function! s:SvnCommitMarkedItems()
 python << EOF
-import vim
-import sys
-import re
-import os
 # add script directory to search path
+import vim, sys, re, os
 sys.path.append(vim.eval("s:dirName"))
 import svnWrapper
 
@@ -561,11 +544,8 @@ endfunction
 "
 function! s:SvnDoCommit()
 python << EOF
-import vim
-import sys
-import re
-import os
 # add script directory to search path
+import vim, sys, re, os
 sys.path.append(vim.eval("s:dirName"))
 import svnWrapper
 
@@ -608,9 +588,8 @@ endfunction
 function! s:SvnGetStat()
     let s:isDiffLocal = 1
 python << EOF
-import vim
-import sys
 # add script directory to search path
+import vim, sys
 sys.path.append(vim.eval("s:dirName"))
 import svnWrapper
 
