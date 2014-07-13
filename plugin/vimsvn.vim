@@ -1,4 +1,4 @@
-"Copyright (c) 2013, katonori All rights reserved.
+"Copyright (c) 2014, katonori All rights reserved.
 "
 "Redistribution and use in source and binary forms, with or without modification, are
 "permitted provided that the following conditions are met:
@@ -63,7 +63,6 @@ function! s:SetupMapChangeListView()
     nnoremap <buffer> <enter> :call <SID>SvnGetChange()<enter>
     nnoremap <buffer> <c-n> :call <SID>SvnGetLogNextRange()<enter>
     nnoremap <buffer> <c-p> :call <SID>SvnGetLogPrevRange()<enter>
-    nnoremap <buffer> q :q<enter>
     syntax match revisionNum '^[0-9]\+'
     syntax match dateNum ' [0-9\-T:\.]\+Z'
     highlight link revisionNum Number
@@ -85,8 +84,6 @@ endfunction
 function! s:SetupMapStatView()
     nnoremap <buffer> <enter> :call <SID>SvnGetFileDiff()<enter>
     nnoremap <buffer> <space> :call <SID>SvnToggleCommit()<enter>
-    let l:cmd = ':nnoremap <buffer> q :q<enter>'
-    execute l:cmd
     syntax match modeified '^M'
     syntax match added '^A'
     syntax match deleted '^D'
