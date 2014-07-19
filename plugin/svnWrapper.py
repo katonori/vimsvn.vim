@@ -194,8 +194,10 @@ class SvnWrapper:
             i += 1
         return (0, lines)
 
-    def getStat(self):
-        cmd = 'svn stat --xml ' + self.mRelPathToRoot
+    def getStat(self, isRoot):
+        cmd = 'svn stat --xml '
+        if int(isRoot) != 0:
+            cmd = 'svn stat --xml ' + self.mRelPathToRoot
         self.appendToLog(cmd)
         out = commands.getoutput(cmd)
         self.appendToLog(out)

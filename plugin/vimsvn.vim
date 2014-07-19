@@ -45,7 +45,8 @@ let s:isDiffLocal = 0
 " define commands
 "
 command! -nargs=0 SvnGetLog :call <SID>SvnGetLog()
-command! -nargs=0 SvnGetStat :call <SID>SvnGetStat()
+command! -nargs=0 SvnGetStat :call <SID>SvnGetStat(0)
+command! -nargs=0 SvnGetStatRoot :call <SID>SvnGetStat(1)
 command! -nargs=0 SvnOpenLog :call <SID>SvnOpenLog()
 command! -nargs=0 SvnGetLogNextRange :call <SID>SvnGetLogNextRange()
 command! -nargs=0 SvnGetLogPrevRange :call <SID>SvnGetLogPrevRange()
@@ -582,7 +583,7 @@ endfunction
 "
 " get current status of working copy
 "
-function! s:SvnGetStat()
+function! s:SvnGetStat(isRoot)
     let s:isDiffLocal = 1
 python << EOF
 # add script directory to search path
@@ -592,6 +593,7 @@ import svnWrapper
 
 def func():
     statFile = vim.eval("s:statFile")
+    isRoot = vim.eval("a:isRoot")
 
     # setup buff
     vim.command(":silent e " + statFile)
@@ -600,7 +602,7 @@ def func():
 
     logFile = vim.eval("s:logFile")
     svn = svnWrapper.getInstance(logFile)
-    statList =svn.getStat()
+    statList =svn.getStat(isRoot)
     del vim.current.buffer[:]
     vim.current.buffer[0] = "rev: " + str(svn.getWorkingCopyRev())
     for s in statList:
