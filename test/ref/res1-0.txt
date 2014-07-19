@@ -1,0 +1,7 @@
+rev: 29
+A		0/a.txt
+D		0.txt
+M		1.txt
+A		2.txt
+?		SvnGetStat.vim
+D		dir0
