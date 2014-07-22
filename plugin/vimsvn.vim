@@ -417,7 +417,7 @@ def func():
         return
 
     svn.addFile(fileName)
-    vim.command(":call s:SvnGetStat()")
+    vim.command(":call s:SvnGetStat(0)")
 
 # run
 func()
@@ -449,7 +449,7 @@ def func():
         return
 
     svn.revertFile(fileName)
-    vim.command(":call s:SvnGetStat()")
+    vim.command(":call s:SvnGetStat(0)")
 
 # run
 func()
@@ -573,7 +573,7 @@ def func():
             if rv != 0:
                 vim.command("echo 'ERROR: svn: commit failed. invoke SvnOpenLog to open log'")
 
-        vim.command(":call s:SvnGetStat()")
+        vim.command(":call s:SvnGetStat(0)")
 # run
 func()
 
