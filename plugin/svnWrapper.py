@@ -162,7 +162,7 @@ class SvnWrapper:
         self.appendToLog(out)
         return rv
 
-    def getChangeList(self, endRev, num):
+    def getChangeList(self, endRev, dirname, num):
         endRev = int(endRev)
         if endRev > self.mWorkingCopyRev: # currently log of newer revision of working copy is not allowed
             endRev = self.mWorkingCopyRev
@@ -170,7 +170,11 @@ class SvnWrapper:
         startRev = endRev - num + 1
         if startRev < 0:
             startRev = 0
-        cmd = 'svn log --xml -r ' + str(endRev) + ':' + str(startRev) + " " + self.mRelPathToRoot
+        cmd = 'svn log --xml -l 200 -r ' + str(endRev) + ':0' + " "
+        if dirname == "":
+            cmd = cmd + self.mRelPathToRoot
+        else:
+            cmd = cmd + dirname
         self.mLogStartRev = int(startRev)
         self.mLogEndRev = int(endRev)
 
@@ -194,10 +198,12 @@ class SvnWrapper:
             i += 1
         return (0, lines)
 
-    def getStat(self, isRoot):
-        cmd = 'svn stat --xml '
-        if int(isRoot) != 0:
+    def getStat(self, statDir):
+        cmd = ""
+        if statDir == "":
             cmd = 'svn stat --xml ' + self.mRelPathToRoot
+        else:
+            cmd = 'svn stat --xml ' + statDir
         self.appendToLog(cmd)
         out = commands.getoutput(cmd)
         self.appendToLog(out)

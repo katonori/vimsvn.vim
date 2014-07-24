@@ -44,9 +44,9 @@ let s:isDiffLocal = 0
 "
 " define commands
 "
-command! -nargs=0 SvnGetLog :call <SID>SvnGetLog()
-command! -nargs=0 SvnGetStat :call <SID>SvnGetStat(0)
-command! -nargs=0 SvnGetStatRoot :call <SID>SvnGetStat(1)
+command! -nargs=? -complete=file SvnGetLog :call <SID>SvnGetLog(<q-args>)
+command! -nargs=? -complete=file SvnGetStat :call <SID>SvnGetStat(<q-args>)
+command! -nargs=0 SvnGetStatRoot :call <SID>SvnGetStat("")
 command! -nargs=0 SvnOpenLog :call <SID>SvnOpenLog()
 command! -nargs=0 SvnGetLogNextRange :call <SID>SvnGetLogNextRange()
 command! -nargs=0 SvnGetLogPrevRange :call <SID>SvnGetLogPrevRange()
@@ -132,9 +132,9 @@ autocmd FileType SvnStatView call <SID>SetupMapStatView()
 autocmd FileType SvnDiffView call <SID>SetupMapDiffView()
 
 "
-" entrance function
+" view log
 "
-function! s:SvnGetLog()
+function! s:SvnGetLog(dir)
 python << EOF
 # add script directory to search path
 import vim, sys
@@ -142,6 +142,7 @@ sys.path.append(vim.eval("s:dirName"))
 import svnWrapper
 
 def func():
+    dirname = vim.eval("a:dir")
     changeListFile = vim.eval("s:changeListFile")
     logFile = vim.eval("s:logFile")
 
@@ -154,7 +155,7 @@ def func():
 
     logNum = vim.eval("s:logNum")
 
-    vim.command(":let s:rv = s:UpdateChangeList()")
+    vim.command(":let s:rv = s:UpdateChangeList('" + dirname +"')")
     rv = vim.eval("s:rv")
     if rv != 0:
         return 1
@@ -168,7 +169,7 @@ endfunction
 " update change list.
 " range of revision is specified by vim variable.
 "
-function! s:UpdateChangeList()
+function! s:UpdateChangeList(dir)
 python << EOF
 # add script directory to search path
 import vim, sys
@@ -176,12 +177,13 @@ sys.path.append(vim.eval("s:dirName"))
 import svnWrapper
 
 def func():
+    dirname = vim.eval("a:dir")
     logFile = vim.eval("s:logFile")
     svn = svnWrapper.getInstance(logFile)
     vim.command(":setlocal noro")
     logEndRev = svn.getWorkingCopyRev()
     logNum = vim.eval("s:logNum")
-    (rv, lines) = svn.getChangeList(logEndRev, logNum)
+    (rv, lines) = svn.getChangeList(logEndRev, dirname, logNum)
     if rv != 0:
         return 1
 
@@ -417,7 +419,7 @@ def func():
         return
 
     svn.addFile(fileName)
-    vim.command(":call s:SvnGetStat(0)")
+    vim.command(":call s:SvnGetStat(".")")
 
 # run
 func()
@@ -449,7 +451,7 @@ def func():
         return
 
     svn.revertFile(fileName)
-    vim.command(":call s:SvnGetStat(0)")
+    vim.command(":call s:SvnGetStat(".")")
 
 # run
 func()
@@ -573,7 +575,7 @@ def func():
             if rv != 0:
                 vim.command("echo 'ERROR: svn: commit failed. invoke SvnOpenLog to open log'")
 
-        vim.command(":call s:SvnGetStat(0)")
+        vim.command(":call s:SvnGetStat(".")")
 # run
 func()
 
@@ -583,7 +585,7 @@ endfunction
 "
 " get current status of working copy
 "
-function! s:SvnGetStat(isRoot)
+function! s:SvnGetStat(dir)
     let s:isDiffLocal = 1
 python << EOF
 # add script directory to search path
@@ -593,7 +595,7 @@ import svnWrapper
 
 def func():
     statFile = vim.eval("s:statFile")
-    isRoot = vim.eval("a:isRoot")
+    statDir = vim.eval("a:dir")
 
     # setup buff
     vim.command(":silent e " + statFile)
@@ -602,7 +604,7 @@ def func():
 
     logFile = vim.eval("s:logFile")
     svn = svnWrapper.getInstance(logFile)
-    statList =svn.getStat(isRoot)
+    statList =svn.getStat(statDir)
     del vim.current.buffer[:]
     vim.current.buffer[0] = "rev: " + str(svn.getWorkingCopyRev())
     for s in statList:
