@@ -44,9 +44,10 @@ let s:isDiffLocal = 0
 "
 " define commands
 "
-command! -nargs=? -complete=file SvnGetLog :call <SID>SvnGetLog(<q-args>)
-command! -nargs=? -complete=file SvnGetStat :call <SID>SvnGetStat(<q-args>)
-command! -nargs=0 SvnGetStatRoot :call <SID>SvnGetStat("")
+command! -nargs=? -complete=file SvnGetLog :call <SID>SvnGetLogWrapper(<q-args>)
+command! -nargs=0 SvnGetLogRoot :call <SID>SvnGetLogWrapperRoot()
+command! -nargs=? -complete=file SvnGetStat :call <SID>SvnGetStatWrapper(<q-args>)
+command! -nargs=0 SvnGetStatRoot :call <SID>SvnGetStatWrapperRoot()
 command! -nargs=0 SvnOpenLog :call <SID>SvnOpenLog()
 command! -nargs=0 SvnGetLogNextRange :call <SID>SvnGetLogNextRange()
 command! -nargs=0 SvnGetLogPrevRange :call <SID>SvnGetLogPrevRange()
@@ -130,6 +131,23 @@ autocmd FileType SvnChangeListView call <SID>SetupMapChangeListView()
 autocmd FileType SvnChangeSummaryView call <SID>SetupMapChangeSummaryView()
 autocmd FileType SvnStatView call <SID>SetupMapStatView()
 autocmd FileType SvnDiffView call <SID>SetupMapDiffView()
+
+"
+" view log
+"
+function! s:SvnGetLogWrapperRoot()
+    return s:SvnGetLog("")
+endfunction
+
+"
+" view log
+"
+function! s:SvnGetLogWrapper(dir)
+    if a:dir == ""
+        return s:SvnGetLog(".")
+    endif
+    return s:SvnGetLog(a:dir)
+endfunction
 
 "
 " view log
@@ -585,6 +603,23 @@ endfunction
 "
 " get current status of working copy
 "
+function! s:SvnGetStatWrapper(dir)
+    if a:dir == ""
+        return s:SvnGetStat(".")
+    endif
+    return s:SvnGetStat(a:dir)
+endfunction
+
+"
+" get current status of working copy
+"
+function! s:SvnGetStatWrapperRoot()
+    return s:SvnGetStat("")
+endfunction
+
+"
+" get current status of working copy
+"
 function! s:SvnGetStat(dir)
     let s:isDiffLocal = 1
 python << EOF
@@ -624,4 +659,3 @@ endfunction
 function! s:SvnOpenLog()
     execute "split " . s:logFile
 endfunction
-
