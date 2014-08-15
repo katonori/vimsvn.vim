@@ -84,8 +84,13 @@ function! s:SetupMapChangeSummaryView()
 endfunction
 
 function! s:SetupMapStatView()
-    nnoremap <buffer> <enter> :call <SID>SvnGetFileDiff()<enter>
-    nnoremap <buffer> <space> :call <SID>SvnToggleCommit()<enter>
+    nnoremap <buffer> <enter> :call <SID>SvnGetFileDiff()<cr>
+    nnoremap <buffer> <space> :call <SID>SvnToggleCommit()<cr>
+    vnoremap <buffer> <space> :call <SID>SvnToggleCommit()<cr>
+    nnoremap <buffer> a :call <SID>SvnAddFile()<cr>
+    vnoremap <buffer> a :call <SID>SvnAddFile()<cr>
+    nnoremap <buffer> r :call <SID>SvnRevertFile()<cr>
+    vnoremap <buffer> r :call <SID>SvnRevertFileRange()<cr>
     syntax match modeified '^M'
     syntax match added '^A'
     syntax match deleted '^D'
@@ -437,7 +442,7 @@ def func():
         return
 
     svn.addFile(fileName)
-    vim.command(":call s:SvnGetStat(".")")
+    vim.command(":call s:SvnGetStat('.')")
 
 # run
 func()
@@ -449,6 +454,26 @@ endfunction
 " revert file
 "
 function! s:SvnRevertFile()
+    call s:SvnRevertFileOne(getline(line(".")))
+    call s:SvnGetStat('.')
+endfunction
+
+"
+" revert file
+"
+function! s:SvnRevertFileRange() range
+    let l:start = line("'<")
+    let l:end = line("'>")
+    for l:i in range(l:start, l:end)
+        call s:SvnRevertFileOne(getline(l:i))
+    endfor
+    call s:SvnGetStat('.')
+endfunction
+
+"
+" revert file
+"
+function! s:SvnRevertFileOne(line)
 python << EOF
 # add script directory to search path
 import vim, sys, re
@@ -460,8 +485,7 @@ def func():
     svn = svnWrapper.getInstance(vim.eval("s:logFile"))
 
     # get fileName
-    (row, col) = vim.current.window.cursor
-    line = vim.current.buffer[row-1]
+    line = vim.eval("a:line")
     m = re.match(r'^[AMD]\t\t(.*)$', line)
     if m:
         fileName = m.group(1)
@@ -469,7 +493,6 @@ def func():
         return
 
     svn.revertFile(fileName)
-    vim.command(":call s:SvnGetStat(".")")
 
 # run
 func()
