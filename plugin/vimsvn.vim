@@ -616,7 +616,7 @@ def func():
             if rv != 0:
                 vim.command("echo 'ERROR: svn: commit failed. invoke SvnOpenLog to open log'")
 
-        vim.command(":call s:SvnGetStat(".")")
+        vim.command(":call s:SvnGetStat('.')")
 # run
 func()
 
